@@ -4,7 +4,7 @@ import mimion
 pygame.init()
 
 #Hieu sua thu
-#Hieru thu tiep
+#Hieru thu tiepbhhjhkhkjhiu
 # asdads
 
 win = pygame.display.set_mode((900, 500))
