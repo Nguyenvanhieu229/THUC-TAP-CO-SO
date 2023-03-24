@@ -4,6 +4,7 @@ import mimion
 pygame.init()
 
 #Hieu sua thu
+#Hieru thu tiep
 
 win = pygame.display.set_mode((900, 500))
 bg = pygame.image.load(r"C:\Users\admin\Pictures\TTCS\bg.jpg")
