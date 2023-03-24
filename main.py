@@ -5,10 +5,10 @@ import skill
 pygame.init()
 
 #Hieu sua thu
-#Hieru thu tiepbhhjhkhkjhiu
+#Hieru thu tiep
 # asdads
 
-win = pygame.display.set_mode((900, 500))
+win = pygame.display.set_mode((1800, 1000))
 bg = pygame.image.load(r"picture\bg.jpg")
 clock = pygame.time.Clock()
 man = player.Player()
@@ -22,7 +22,7 @@ skills = []
 def redrawWindow(move):
     win.blit(bg, (0,0))
 
-    for skill in skills:
+    for skill in man.skills:
         skill.draw(win)
 
     for minion in minions:
@@ -40,11 +40,11 @@ def playerAttack(keys):
 
     #tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
     if keys[pygame.K_e] and man.E == 0:
-        skills.append(man.attack(win, "E", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
+        man.attack(win, "E", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
     elif keys[pygame.K_w] and man.W == 0:
-        skills.append(man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
+        man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
     elif keys[pygame.K_q] and man.Q == 0:
-        skills.append(man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
+        man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
 
 
 

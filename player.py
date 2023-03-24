@@ -13,6 +13,7 @@ class Player:
         self.tancong = 50
         self.walkCount = 0
         self.thu = 20
+        self.skills = []
         self.nangluong = 100
         self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
         self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'), pygame.image.load(r'picture\main character\L2.png'), pygame.image.load(r'picture\main character\L3.png'), pygame.image.load(r'picture\main character\L4.png'), pygame.image.load(r'picture\main character\L5.png'), pygame.image.load(r'picture\main character\L6.png'), pygame.image.load(r'picture\main character\L7.png'), pygame.image.load(r'picture\main character\L8.png'), pygame.image.load(r'picture\main character\L9.png')]
@@ -43,20 +44,23 @@ class Player:
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 150
-        return skill.Skill(pygame.image.load(r"picture/main character/skills/skill1.png"), 100, start_x, start_y, end_x, end_y, 200)
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 100, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        print("skill2")
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill26.png"), pygame.image.load(r"picture/main character/skills/skill22.png"),
+                                        pygame.image.load(r"picture/main character/skills/skill23.png"), pygame.image.load(r"picture/main character/skills/skill24.png"),
+                                       pygame.image.load(r"picture/main character/skills/skill24.png"), pygame.image.load(r"picture/main character/skills/skill25.png")], 200, start_x, start_y, end_x,
+                        end_y, 200, 6))
         self.W = 200
 
     def ultilmate(self, win, start_x, start_y, end_x, end_y):
-        print("ultilmate")
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 150, end_x, end_y, end_x, end_y, 300, 1))
         self.E = 300
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":
-            return self.skill1(win, start_x, start_y, end_x, end_y)
+            self.skill1(win, start_x, start_y, end_x, end_y)
         elif skill == "W":
-            return self.skill2(win, start_x, start_y, end_x, end_y)
+            self.skill2(win, start_x, start_y, end_x, end_y)
         elif skill == "E":
-            return self.ultilmate(win, start_x, start_y, end_x, end_y)
+            self.ultilmate(win, start_x, start_y, end_x, end_y)
