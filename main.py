@@ -5,6 +5,7 @@ pygame.init()
 
 #Hieu sua thu
 #Hieru thu tiep
+# asdads
 
 win = pygame.display.set_mode((900, 500))
 bg = pygame.image.load(r"C:\Users\admin\Pictures\TTCS\bg.jpg")
