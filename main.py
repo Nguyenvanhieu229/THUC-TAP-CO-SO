@@ -1,6 +1,7 @@
 import pygame
 import player
 import mimion
+import skill
 pygame.init()
 
 #Hieu sua thu
@@ -15,12 +16,18 @@ man = player.Player()
 run = True
 count = 0
 minions = []
+skills = []
 
 
 def redrawWindow(move):
     win.blit(bg, (0,0))
+
+    for skill in skills:
+        skill.draw(win)
+
     for minion in minions:
         minion.draw(win)
+
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
@@ -33,11 +40,13 @@ def playerAttack(keys):
 
     #tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
     if keys[pygame.K_e] and man.E == 0:
-        man.attack(win, "E")
+        skills.append(man.attack(win, "E", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
     elif keys[pygame.K_w] and man.W == 0:
-        man.attack(win, "W")
+        skills.append(man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
     elif keys[pygame.K_q] and man.Q == 0:
-        man.attack(win, "Q")
+        skills.append(man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10))
+
+
 
 while run:
     clock.tick(30)

@@ -2,7 +2,7 @@ import pygame
 import tinhToan
 
 class Skill:
-    def __init(self, img, atk, start_x, start_y, end_x, end_y, range):
+    def __init__(self, img, atk, start_x, start_y, end_x, end_y, range):
         self.img = img
         self.atk = atk
         self.range = range
@@ -10,11 +10,8 @@ class Skill:
         self.start_y = start_y
         self.vel = 10
         kc = tinhToan.khoangCach(start_x, start_y, end_x, end_y)
-        if kc <= range:
-            self.end_x = end_x
-            self.end_y = end_y
-        else:
-            self.end_x =
+        self.end_x = int((end_x - self.start_x) * self.range / kc) + self.start_x
+        self.end_y = int((end_y - self.start_y) * self.range / kc) + self.start_y
 
 
 

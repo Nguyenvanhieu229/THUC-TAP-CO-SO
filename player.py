@@ -1,6 +1,7 @@
 import pygame
 import math
 import tinhToan
+import skill
 
 
 
@@ -30,12 +31,9 @@ class Player:
         if move:
             self.next_x = next_x
             self.next_y = next_y
-        if self.vel >= math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2):
-            self.x = self.next_x
-            self.y = self.next_y
-        else:
-            self.x = (self.vel * (self.next_x - self.x))/math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2) + self.x
-            self.y = (self.vel * (self.next_y - self.y))/math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2) + self.y
+        kc = tinhToan.khoangCach(self.x, self.y, self.next_x, self.next_y)
+        self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
+        self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
         if self.x <= self.next_x:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
@@ -43,23 +41,22 @@ class Player:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
 
-    def skill1(self, win):
-        print('skill1')
-        self.Q = 300
+    def skill1(self, win, start_x, start_y, end_x, end_y):
+        self.Q = 150
+        return skill.Skill(pygame.image.load(r"picture/main character/skills/skill1.png"), 100, start_x, start_y, end_x, end_y, 200)
 
-
-    def skill2(self, win):
+    def skill2(self, win, start_x, start_y, end_x, end_y):
         print("skill2")
-        self.W = 300
+        self.W = 200
 
-    def ultilmate(self, win):
+    def ultilmate(self, win, start_x, start_y, end_x, end_y):
         print("ultilmate")
         self.E = 300
 
-    def attack(self, win, skill):
+    def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":
-            self.skill1(win)
+            return self.skill1(win, start_x, start_y, end_x, end_y)
         elif skill == "W":
-            self.skill2(win)
+            return self.skill2(win, start_x, start_y, end_x, end_y)
         elif skill == "E":
-            self.ultilmate(win)
+            return self.ultilmate(win, start_x, start_y, end_x, end_y)
