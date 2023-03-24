@@ -13,8 +13,8 @@ class Player:
         self.walkCount = 0
         self.thu = 20
         self.nangluong = 100
-        self.hinhanhTrai = [pygame.image.load('R1.png'), pygame.image.load('R2.png'), pygame.image.load('R3.png'),pygame.image.load('R4.png'), pygame.image.load('R5.png'), pygame.image.load('R6.png'),pygame.image.load('R7.png'), pygame.image.load('R8.png'), pygame.image.load('R9.png')]
-        self.hinhanhPhai = [pygame.image.load('L1.png'), pygame.image.load('L2.png'), pygame.image.load('L3.png'),pygame.image.load('L4.png'), pygame.image.load('L5.png'), pygame.image.load('L6.png'),pygame.image.load('L7.png'), pygame.image.load('L8.png'), pygame.image.load('L9.png')]
+        self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
+        self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'), pygame.image.load(r'picture\main character\L2.png'), pygame.image.load(r'picture\main character\L3.png'), pygame.image.load(r'picture\main character\L4.png'), pygame.image.load(r'picture\main character\L5.png'), pygame.image.load(r'picture\main character\L6.png'), pygame.image.load(r'picture\main character\L7.png'), pygame.image.load(r'picture\main character\L8.png'), pygame.image.load(r'picture\main character\L9.png')]
         self.vel = 5
         self.Q = 0
         self.W = 0
@@ -30,10 +30,12 @@ class Player:
         if move:
             self.next_x = next_x
             self.next_y = next_y
-        kc = tinhToan.khoangCach(self.x, self.y, self.next_x, self.next_y)
-
-        self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
-        self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
+        if self.vel >= math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2):
+            self.x = self.next_x
+            self.y = self.next_y
+        else:
+            self.x = (self.vel * (self.next_x - self.x))/math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2) + self.x
+            self.y = (self.vel * (self.next_y - self.y))/math.sqrt((self.x - self.next_x) **2 + (self.y - self.next_y) **2) + self.y
         if self.x <= self.next_x:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1

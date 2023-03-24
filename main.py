@@ -8,7 +8,7 @@ pygame.init()
 # asdads
 
 win = pygame.display.set_mode((900, 500))
-bg = pygame.image.load(r"C:\Users\admin\Pictures\TTCS\bg.jpg")
+bg = pygame.image.load(r"picture\bg.jpg")
 clock = pygame.time.Clock()
 man = player.Player()
 

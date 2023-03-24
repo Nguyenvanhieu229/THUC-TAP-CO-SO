@@ -2,7 +2,7 @@ import pygame.image
 
 class Minion:
     def __init__(self, ben, x):
-        self.img = pygame.image.load(r"C:\Users\admin\Pictures\Linh.png")
+        self.img = pygame.image.load(r"picture\enemy\L1E.png")
         self.mau = 100
         self.tancong = 5
         self.thu = 10
