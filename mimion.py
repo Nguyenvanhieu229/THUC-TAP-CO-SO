@@ -2,8 +2,14 @@ import pygame.image
 
 class Minion:
     def __init__(self, ben, x):
-        self.img = pygame.image.load(r"picture\enemy\L1E.png")
+        self.img = [pygame.image.load(r"picture\minion\linh1.png"),
+                    pygame.image.load(r"picture\minion\linh2.png"),
+                    pygame.image.load(r"picture\minion\linh3.png")]
+        self.img2 = [pygame.image.load(r"picture\minion\linh1e.png"),
+                    pygame.image.load(r"picture\minion\linh2e.png"),
+                    pygame.image.load(r"picture\minion\linh3e.png")]
         self.mau = 100
+        self.walkCount = 0
         self.tancong = 5
         self.thu = 10
         self.x = x
@@ -11,15 +17,25 @@ class Minion:
         self.tonTai = True
         self.hitbox = (1,1)
         self.ben = ben
-        self.vel = 3
+        self.vel = 1
 
     def draw(self, win):
+        if self.walkCount == 9:
+            self.walkCount = 0
         if self.ben:
             phia = 1
         else:
             phia = -1
         self.x += self.vel * phia
-        win.blit(self.img, (self.x, self.y))
+        if self.x >= 900:
+            self.x = 850
+        if self.x <= 0:
+            self.x = 0
+        if self.ben:
+            win.blit(self.img2[self.walkCount//3], (self.x, self.y))
+        else:
+            win.blit(self.img[self.walkCount // 3], (self.x, self.y))
+        self.walkCount += 1
 
     def biDanhTrung(self, chiSo):
         self.mau -= chiSo

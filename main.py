@@ -1,6 +1,7 @@
 import pygame
 import player
 import mimion
+import enemy
 import skill
 pygame.init()
 
@@ -8,14 +9,16 @@ pygame.init()
 #Hieru thu tiep
 # asdads
 
-win = pygame.display.set_mode((1800, 1000))
+win = pygame.display.set_mode((900, 500))
 bg = pygame.image.load(r"picture\bg.jpg")
 clock = pygame.time.Clock()
 man = player.Player()
+ene = enemy.Enemy()
 
 run = True
 count = 0
-minions = []
+minionsPlayer = []
+minionsEnemy = []
 skills = []
 
 
@@ -25,8 +28,12 @@ def redrawWindow(move):
     for skill in man.skills:
         skill.draw(win)
 
-    for minion in minions:
+    for minion in minionsPlayer:
         minion.draw(win)
+    for minion in minionsEnemy:
+        minion.draw(win)
+
+    ene.draw(win, man, minionsPlayer)
 
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
@@ -50,9 +57,9 @@ def playerAttack(keys):
 
 while run:
     clock.tick(30)
-    if count == 0 or count == 5 or count == 10:
-        minions.append(mimion.Minion(False, 900))
-        minions.append(mimion.Minion(True, 0))
+    if count == 0:
+        minionsEnemy.append(mimion.Minion(False, 900))
+        minionsPlayer.append(mimion.Minion(True, 0))
     count += 1
     if count == 300:
         count = 0
