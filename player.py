@@ -13,11 +13,12 @@ class Player:
         self.tancong = 50
         self.walkCount = 0
         self.thu = 20
+        self.range = 200
         self.skills = []
         self.nangluong = 100
         self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
         self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'), pygame.image.load(r'picture\main character\L2.png'), pygame.image.load(r'picture\main character\L3.png'), pygame.image.load(r'picture\main character\L4.png'), pygame.image.load(r'picture\main character\L5.png'), pygame.image.load(r'picture\main character\L6.png'), pygame.image.load(r'picture\main character\L7.png'), pygame.image.load(r'picture\main character\L8.png'), pygame.image.load(r'picture\main character\L9.png')]
-        self.vel = 5
+        self.vel = 2
         self.Q = 0
         self.W = 0
         self.E = 0
@@ -51,9 +52,9 @@ class Player:
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 100, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill26.png"), pygame.image.load(r"picture/main character/skills/skill22.png"),
-                                        pygame.image.load(r"picture/main character/skills/skill23.png"), pygame.image.load(r"picture/main character/skills/skill24.png"),
-                                       pygame.image.load(r"picture/main character/skills/skill24.png"), pygame.image.load(r"picture/main character/skills/skill25.png")], 200, start_x, start_y, end_x,
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
+                                        pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
+                                       pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 200, start_x, start_y, end_x,
                         end_y, 200, 6))
         self.W = 200
 
