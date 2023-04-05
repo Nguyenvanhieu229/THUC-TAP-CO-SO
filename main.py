@@ -20,15 +20,13 @@ skills = []
 
 
 def redrawWindow(move):
-    win.blit(bg, (0,0))
-
+    win.blit(bg, (0, 0))
+    man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     for skill in man.skills:
         skill.draw(win)
 
     for minion in minions:
         minion.draw(win)
-
-    man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
 def playerAttack(keys):
@@ -56,16 +54,16 @@ while run:
     count += 1
     if count == 300:
         count = 0
+    keys = pygame.key.get_pressed()
     move = False
     events = pygame.event.get()
-    keys = pygame.key.get_pressed()
     for event in events:
         if event.type == pygame.QUIT:
             run = False
         if event.type == pygame.MOUSEBUTTONDOWN:
             move = True
+    redrawWindow(move)
     playerAttack(keys)
 
-    redrawWindow(move)
 
 pygame.quit()

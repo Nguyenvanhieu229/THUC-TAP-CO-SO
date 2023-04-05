@@ -26,21 +26,25 @@ class Player:
         self.tonTai = True
 
     def draw(self, win, next_x, next_y, move):
-        # print(next_x, next_y)
-        if self.walkCount + 1 >= 27:
-            self.walkCount = 0
+        self.walkCount = self.walkCount+1 if self.walkCount < 26 else 0
         if move:
             self.next_x = next_x
             self.next_y = next_y
         kc = tinhToan.khoangCach(self.x, self.y, self.next_x, self.next_y)
         self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
         self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
-        if self.x <= self.next_x:
+
+        if self.next_x < self.x:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
-            self.walkCount += 1
+
+
+
+
+
+
+
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 150

@@ -19,7 +19,7 @@ class Minion:
         else:
             phia = -1
         self.x += self.vel * phia
-        win.blit(self.img, (self.x, self.y))
+        win.blit(self.img, (self.x+1, self.y))
 
     def biDanhTrung(self, chiSo):
         self.mau -= chiSo
