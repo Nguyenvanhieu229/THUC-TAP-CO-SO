@@ -29,9 +29,9 @@ def redrawWindow(move):
         skill.draw(win)
 
     for minion in minionsPlayer:
-        minion.draw(win)
+        minion.draw(win, ene, minionsEnemy)
     for minion in minionsEnemy:
-        minion.draw(win)
+        minion.draw(win, man, minionsPlayer)
 
     ene.draw(win, man, minionsPlayer)
 
