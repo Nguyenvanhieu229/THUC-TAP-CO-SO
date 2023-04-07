@@ -37,6 +37,9 @@ def redrawWindow(move):
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
+def playEvent():
+    man.move()
+
 def playerAttack(keys):
 
     # giam thoi gian hoi chieu cua ba chieu
@@ -72,6 +75,7 @@ while run:
             move = True
 
     playerAttack(keys)
+    #playEVent()
 
     redrawWindow(move)
 
