@@ -18,7 +18,7 @@ class Skill:
 
 
     def draw(self, win):
-        if self.walkCount < self.soAnh - 1:
+        if self.walkCount < self.soAnh  -1:
             self.walkCount += 1
         else:
             self.walkCount = 0

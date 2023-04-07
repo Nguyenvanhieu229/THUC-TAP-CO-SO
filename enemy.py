@@ -5,7 +5,7 @@ class Enemy:
     def __init__(self):
         self.next_x = 0
         self.next_y = 0
-        self.mau = 1000
+        self.health = 1000
         self.tancong = 50
         self.walkCount = 0
         self.thu = 20
