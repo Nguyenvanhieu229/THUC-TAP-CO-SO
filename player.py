@@ -48,7 +48,7 @@ class Player:
 
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
-        self.Q = 150
+        self.Q = 0
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 100, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
@@ -56,11 +56,11 @@ class Player:
                                         pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
                                        pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 200, start_x, start_y, end_x,
                         end_y, 200, 6))
-        self.W = 200
+        self.W = 0
 
     def ultilmate(self, win, start_x, start_y, end_x, end_y):
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 150, end_x, end_y, end_x, end_y, 300, 1))
-        self.E = 300
+        self.E = 0
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":
@@ -68,4 +68,4 @@ class Player:
         elif skill == "W":
             self.skill2(win, start_x, start_y, end_x, end_y)
         elif skill == "E":
-            self.ultilmate(win, start_x, start_y, end_x, end_y)
+            self.ultimate(win, start_x, start_y, end_x, end_y)

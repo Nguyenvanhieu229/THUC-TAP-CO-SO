@@ -8,13 +8,14 @@ pygame.init()
 #Hieu sua thu
 #Hieru thu tiep
 # asdads
-
+bg1 = pygame.image.load(r"C:\Users\NGUYENHOAN\OneDrive\Pictures\Saved Pictures\bg1.png")
+bg2 = pygame.image.load(r"C:\Users\NGUYENHOAN\OneDrive\Pictures\Saved Pictures\bg2.png")
 win = pygame.display.set_mode((1366, 768))
 bg = pygame.image.load(r"picture/bacg.png")
 clock = pygame.time.Clock()
 man = player.Player()
 ene = enemy.Enemy()
-
+clock2 = pygame.time.Clock()
 run = True
 count = 0
 minionsPlayer = []
@@ -53,26 +54,34 @@ def playerAttack(keys):
         man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
 
 
-
-while run:
-    clock.tick(30)
-    if count == 0:
-        minionsEnemy.append(mimion.Minion(False, 900))
-        minionsPlayer.append(mimion.Minion(True, 0))
-    count += 1
-    if count == 300:
-        count = 0
-    move = False
-    events = pygame.event.get()
-    keys = pygame.key.get_pressed()
-    for event in events:
+win.blit(bg1, (0,0))
+event2 = pygame.event.get()
+run2=True
+while run2:
+    clock2.tick(10)
+    for event in event2:
         if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-            move = True
+            run2 = False
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            while run:
+                clock.tick(30)
+                if count == 0:
+                    minionsEnemy.append(mimion.Minion(False, 900))
+                    minionsPlayer.append(mimion.Minion(True, 0))
+                count += 1
+                if count == 300:
+                    count = 0
+                move = False
+                events = pygame.event.get()
+                keys = pygame.key.get_pressed()
+                for event in events:
+                    if event.type == pygame.QUIT:
+                        run = False
+                    if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                        move = True
 
-    playerAttack(keys)
+                playerAttack(keys)
 
-    redrawWindow(move)
+                redrawWindow(move)
 
-pygame.quit()
+            pygame.quit()

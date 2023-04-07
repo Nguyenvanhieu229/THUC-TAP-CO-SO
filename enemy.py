@@ -1,6 +1,7 @@
 import pygame
 import tinhToan
-
+import math
+import random
 class Enemy:
     def __init__(self):
         self.next_x = 0
@@ -47,7 +48,8 @@ class Enemy:
     def draw(self, win, man, minionPlayer):
         if self.walkCount + 1 >= 33:
             self.walkCount = 0
-        minx, miny = tinhToan.find(self, man, minionPlayer)
+        minx,miny = random.randint(1,1300),random.randint(1,500)
+        #minx, miny = tinhToan.find(self, man, minionPlayer)
         kc = tinhToan.khoangCach(self.x, self.y, minx, miny)
         if kc > self.range:
             self.x = int((minx - self.x) * self.vel / kc) + self.x if self.vel < kc else minx
