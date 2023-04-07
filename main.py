@@ -34,7 +34,7 @@ def redrawWindow(move):
         minion.draw(win, man, minionsPlayer)
 
     ene.draw(win, man, minionsPlayer)
-
+    pygame.draw.circle(surface=win, color=(129, 178, 112),center=(100, 100), radius=100, width=2)
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
@@ -51,7 +51,7 @@ def playerAttack(keys):
     elif keys[pygame.K_w] and man.W == 0:
         man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
     elif keys[pygame.K_q] and man.Q == 0:
-        man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+        man.attack( win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
 
 
 
@@ -72,7 +72,6 @@ while run:
         if event.type == pygame.MOUSEBUTTONDOWN:
             move = True
     playerAttack(keys)
-
     redrawWindow(move)
 
 pygame.quit()

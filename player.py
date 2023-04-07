@@ -9,21 +9,38 @@ class Player:
     def __init__(self):
         self.next_x = 0
         self.next_y = 0
-        self.mau = 1000
+        self.health = 1000
         self.tancong = 50
         self.walkCount = 0
         self.thu = 20
         self.range = 200
         self.skills = []
         self.nangluong = 100
-        self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
-        self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'), pygame.image.load(r'picture\main character\L2.png'), pygame.image.load(r'picture\main character\L3.png'), pygame.image.load(r'picture\main character\L4.png'), pygame.image.load(r'picture\main character\L5.png'), pygame.image.load(r'picture\main character\L6.png'), pygame.image.load(r'picture\main character\L7.png'), pygame.image.load(r'picture\main character\L8.png'), pygame.image.load(r'picture\main character\L9.png')]
+        self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'),
+                            pygame.image.load(r'picture\main character\R2.png'),
+                            pygame.image.load(r'picture\main character\R3.png'),
+                            pygame.image.load(r'picture\main character\R4.png'),
+                            pygame.image.load(r'picture\main character\R5.png'),
+                            pygame.image.load(r'picture\main character\R6.png'),
+                            pygame.image.load(r'picture\main character\R7.png'),
+                            pygame.image.load(r'picture\main character\R8.png'),
+                            pygame.image.load(r'picture\main character\R9.png')]
+        self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'),
+                            pygame.image.load(r'picture\main character\L2.png'),
+                            pygame.image.load(r'picture\main character\L3.png'),
+                            pygame.image.load(r'picture\main character\L4.png'),
+                            pygame.image.load(r'picture\main character\L5.png'),
+                            pygame.image.load(r'picture\main character\L6.png'),
+                            pygame.image.load(r'picture\main character\L7.png'),
+                            pygame.image.load(r'picture\main character\L8.png'),
+                            pygame.image.load(r'picture\main character\L9.png')]
         self.vel = 2
         self.Q = 0
         self.W = 0
         self.E = 0
         self.x = 100
         self.y = 100
+        self.hitbox = ()
         self.tonTai = True
 
     def draw(self, win, next_x, next_y, move):
