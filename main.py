@@ -9,8 +9,8 @@ pygame.init()
 #Hieru thu tiep
 # asdads
 
-win = pygame.display.set_mode((900, 500))
-bg = pygame.image.load(r"picture\bg.jpg")
+win = pygame.display.set_mode((1366, 768))
+bg = pygame.image.load(r"C:\Users\NGUYENHOAN\Downloads\bacg.png")
 clock = pygame.time.Clock()
 man = player.Player()
 ene = enemy.Enemy()
@@ -34,7 +34,8 @@ def redrawWindow(move):
         minion.draw(win, man, minionsPlayer)
 
     ene.draw(win, man, minionsPlayer)
-
+    win.blit(pygame.image.load(r"C:\Users\NGUYENHOAN\OneDrive\Pictures\Saved Pictures\arrow.png"),
+             (pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]))
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
@@ -69,8 +70,9 @@ while run:
     for event in events:
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
             move = True
+
     playerAttack(keys)
 
     redrawWindow(move)

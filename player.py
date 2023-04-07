@@ -18,7 +18,7 @@ class Player:
         self.nangluong = 100
         self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
         self.hinhanhPhai = [pygame.image.load(r'picture\main character\L1.png'), pygame.image.load(r'picture\main character\L2.png'), pygame.image.load(r'picture\main character\L3.png'), pygame.image.load(r'picture\main character\L4.png'), pygame.image.load(r'picture\main character\L5.png'), pygame.image.load(r'picture\main character\L6.png'), pygame.image.load(r'picture\main character\L7.png'), pygame.image.load(r'picture\main character\L8.png'), pygame.image.load(r'picture\main character\L9.png')]
-        self.vel = 2
+        self.vel = 3
         self.Q = 0
         self.W = 0
         self.E = 0
@@ -36,9 +36,9 @@ class Player:
         self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
 
         if self.next_x < self.x:
-            win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x, self.y))
+            win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x-25, self.y-25))
         else:
-            win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
+            win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
 
 
 
