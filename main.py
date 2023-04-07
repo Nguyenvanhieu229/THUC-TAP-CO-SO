@@ -9,8 +9,8 @@ pygame.init()
 #Hieru thu tiep
 # asdads
 
-win = pygame.display.set_mode((900, 500))
-bg = pygame.image.load(r"picture\bg.jpg")
+win = pygame.display.set_mode((1366, 768))
+bg = pygame.image.load(r"C:\Users\NGUYENHOAN\Downloads\bacg.png")
 clock = pygame.time.Clock()
 man = player.Player()
 ene = enemy.Enemy()
@@ -34,7 +34,8 @@ def redrawWindow(move):
         minion.draw(win, man, minionsPlayer)
 
     ene.draw(win, man, minionsPlayer)
-    pygame.draw.circle(surface=win, color=(129, 178, 112),center=(100, 100), radius=100, width=2)
+    win.blit(pygame.image.load(r"C:\Users\NGUYENHOAN\OneDrive\Pictures\Saved Pictures\arrow.png"),
+             (pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]))
     man.draw(win, pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], move)
     pygame.display.update()
 
@@ -51,7 +52,7 @@ def playerAttack(keys):
     elif keys[pygame.K_w] and man.W == 0:
         man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
     elif keys[pygame.K_q] and man.Q == 0:
-        man.attack( win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+        man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
 
 
 
@@ -69,9 +70,11 @@ while run:
     for event in events:
         if event.type == pygame.QUIT:
             run = False
-        if event.type == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
             move = True
+
     playerAttack(keys)
+
     redrawWindow(move)
 
 pygame.quit()
