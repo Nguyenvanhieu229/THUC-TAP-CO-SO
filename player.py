@@ -35,7 +35,7 @@ class Player:
         self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
         self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
 
-        if self.next_x < self.x:
+        if self.next_x > self.x:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x-25, self.y-25))
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))

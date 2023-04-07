@@ -22,7 +22,7 @@ class Skill:
             self.walkCount += 1
         else:
             self.walkCount = 0
-        kc = tinhToan.khoangCach(self.start_x, self.start_y, self.end_x, self.end_y)
+        kc = tinhToan.khoangCach( self.start_x, self.start_y, self.end_x, self.end_y)
         if kc != 0:
             win.blit(self.img[self.walkCount], (self.start_x, self.start_y))
         self.start_x = int((self.end_x - self.start_x) * self.vel / kc) + self.start_x if (self.vel < kc and kc != 0)  else self.end_x
