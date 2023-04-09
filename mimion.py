@@ -23,11 +23,19 @@ class Minion:
         self.ben = ben
         self.vel = 1
 
-    def draw(self, win, ene, minions):
-        minx, miny = tinhToan.find(self, ene, minions)
-        kc = tinhToan.khoangCach(self.x, self.y, minx, miny)
+    def draw(self, win):
+
         if self.walkCount == 9:
             self.walkCount = 0
+
+        if self.ben:
+            win.blit(self.img2[self.walkCount//3], (self.x, self.y))
+        else:
+            win.blit(self.img[self.walkCount // 3], (self.x, self.y))
+        self.walkCount += 1
+    def move(self, ene, minions):
+        minx, miny = tinhToan.find(self, ene, minions)
+        kc = tinhToan.khoangCach(self.x, self.y, minx, miny)
         if self.ben:
             phia = 1
         else:
@@ -38,12 +46,6 @@ class Minion:
             self.x = 850
         if self.x <= 0:
             self.x = 0
-        if self.ben:
-            win.blit(self.img2[self.walkCount//3], (self.x, self.y))
-        else:
-            win.blit(self.img[self.walkCount // 3], (self.x, self.y))
-        self.walkCount += 1
-
     def biDanhTrung(self, chiSo):
         self.mau -= chiSo
         #am thanh

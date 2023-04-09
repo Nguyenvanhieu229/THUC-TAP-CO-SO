@@ -2,6 +2,9 @@ import pygame
 import tinhToan
 import math
 import random
+import player
+
+
 class Enemy:
     def __init__(self):
         self.next_x = 0
@@ -13,6 +16,7 @@ class Enemy:
         self.skills = []
         self.range = 50
         self.nangluong = 100
+        self.hitbox=(self.x, self.y, 20, 20)
         self.hinhanhTrai = [pygame.image.load(r'picture\enemy\L1E.png'),
                             pygame.image.load(r'picture\enemy\L2E.png'),
                             pygame.image.load(r'picture\enemy\L3E.png'),
@@ -45,16 +49,22 @@ class Enemy:
         self.y = 100
         self.tonTai = True
 
-    def draw(self, win, man, minionPlayer):
+    def move(self, man, reset):
+        if reset % 30 == 0:
+            self.next_x, self.next_y = random.randint(man.x, man.x+500), random.randint(man.y, man.y+500)
+        else:
+            self.x = self.next_x
+            self.y = self.next_y
+        #minx, miny = tinhToan.find(self, man, minionPlayer)
+        kc = tinhToan.khoangCach(self.x, self.y, self.next_x, self.next_y)
+        if kc > self.range:
+            self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
+            self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
+
+    def draw(self, win):
         if self.walkCount + 1 >= 33:
             self.walkCount = 0
-        minx,miny = random.randint(1,1300),random.randint(1,500)
-        #minx, miny = tinhToan.find(self, man, minionPlayer)
-        kc = tinhToan.khoangCach(self.x, self.y, minx, miny)
-        if kc > self.range:
-            self.x = int((minx - self.x) * self.vel / kc) + self.x if self.vel < kc else minx
-            self.y = int((miny - self.y) * self.vel / kc) + self.y if self.vel < kc else miny
-        if self.x >= minx:
+        if self.x >= self.next_x:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
         else:
