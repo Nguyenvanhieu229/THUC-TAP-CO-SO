@@ -1,5 +1,5 @@
 import pygame.image
-
+import skill
 import tinhToan
 
 
@@ -14,12 +14,12 @@ class Minion:
         self.health = 100
         self.range = 40
         self.walkCount = 0
-        self.tancong = 5
-        self.thu = 10
+        self.skill = []
+        self.health = 10
         self.x = x
         self.y = 250
         self.tonTai = True
-        self.hitbox = (1, 1, 10, 10)
+        self.hitbox = (self.x, self.y, 200, 200)
         self.ben = ben
         self.vel = 1
 
@@ -42,12 +42,13 @@ class Minion:
             phia = -1
         if kc > self.range:
             self.x += self.vel * phia
-        if self.x >= 900:
-            self.x = 850
+        if self.x >= 1300:
+            self.x = 1250
         if self.x <= 0:
             self.x = 0
-    def biDanhTrung(self, chiSo):
-        self.mau -= chiSo
-        #am thanh
-        if self.mau <= 0:
+        self.hitbox = (self.x, self.y, 200, 200)
+
+    def hitted(self, enemyskill):
+        self.health -= enemyskill.atk
+        if self.health <= 0:
             self.tonTai = False

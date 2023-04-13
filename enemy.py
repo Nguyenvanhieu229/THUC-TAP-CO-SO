@@ -9,14 +9,13 @@ class Enemy:
     def __init__(self):
         self.next_x = 0
         self.next_y = 0
-        self.health = 1000
+        self.health = 10
         self.tancong = 50
         self.walkCount = 0
         self.thu = 20
         self.skills = []
         self.range = 50
         self.nangluong = 100
-        self.hitbox=(self.x, self.y, 20, 20)
         self.hinhanhTrai = [pygame.image.load(r'picture\enemy\L1E.png'),
                             pygame.image.load(r'picture\enemy\L2E.png'),
                             pygame.image.load(r'picture\enemy\L3E.png'),
@@ -47,6 +46,7 @@ class Enemy:
         self.E = 0
         self.x = 100
         self.y = 100
+        self.hitbox=(self.x, self.y, 20, 20)
         self.tonTai = True
 
     def move(self, man, reset):
@@ -70,12 +70,13 @@ class Enemy:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
+        pygame.draw.rect(win, (0, 128, 0),
+                         (self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (5 * (10 - self.health)), 10))
 
     # def tanCong(self, loai):
     #     #ramdom de chon loai tan cong
 
-    def biDanhTrung(self, chiSo):
-        self.mau -= chiSo
-        #am thanh
-        if self.mau <= 0:
+    def hitted(self, enemyskill):
+        self.health -= enemyskill.atk
+        if self.health <= 0:
             self.tonTai = False
