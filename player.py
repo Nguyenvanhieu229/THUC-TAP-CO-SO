@@ -46,11 +46,6 @@ class Player:
 
 
 
-
-
-
-
-
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 0
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 100, start_x, start_y, end_x, end_y, 200, 1, (self.x, self.y, 10, 10)))

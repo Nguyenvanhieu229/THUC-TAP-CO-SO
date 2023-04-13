@@ -9,3 +9,5 @@ def find(a, b, c):
             minx = i.x
             miny = i.y
     return (minx, miny)
+
+

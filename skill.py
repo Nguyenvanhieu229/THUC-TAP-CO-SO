@@ -9,6 +9,7 @@ class Skill:
         self.start_x = start_x
         self.start_y = start_y
         self.walkCount = 0
+        self.hitBox = (self.x, self.y, 10, 20)
         self.vel = 10
         self.hitbox = hitbox
         self.soAnh = soAnh

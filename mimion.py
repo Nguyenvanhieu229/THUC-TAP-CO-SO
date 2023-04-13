@@ -19,7 +19,7 @@ class Minion:
         self.x = x
         self.y = 250
         self.tonTai = True
-        self.hitbox = (1,1)
+        self.hitbox = (1, 1, 10, 10)
         self.ben = ben
         self.vel = 1
 
