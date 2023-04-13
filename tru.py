@@ -4,7 +4,7 @@ import pygame.image
 class Nha:
     def __int__(self):
         self.health = 1000
-        self.tancong = 10
+        self.tancong = 100
         self.thu = 30
         self.hitbox = (1, 1)
         self.hinhanh = []
