@@ -1,21 +1,26 @@
 import pygame.image
 
 
-class Nha:
-    def __int__(self):
+class Turret:
+    def __init__(self, img, x, y):
         self.health = 1000
+        self.img = img
         self.tancong = 100
         self.thu = 30
         self.hitbox = (1, 1)
         self.hinhanh = []
-        self.x = 100#toa do
-        self.y = 100
+        self.x = x
+        self.y = y
         self.tonTai = True
-        self.phamVi = 200;
+        self.range = 100;
 
     def draw(self,win):
         #se dung im tai cho
-        win.blit(pygame.image.load(r"picture\blueturret.png"), (100, 100))
+
+
+        pygame.draw.ellipse(win, color="green", rect=(self.x - 70, self.y + 50, 240, 170), width=2)
+        win.blit(self.img, (self.x, self.y))
+
 
     #def tanCong(self):
         #tan cong neu co doi tuong trong pham vi

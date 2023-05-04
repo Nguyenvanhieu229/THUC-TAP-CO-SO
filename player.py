@@ -1,6 +1,6 @@
 import pygame
 import math
-import tinhToan
+import calculator
 import skill
 
 
@@ -9,10 +9,10 @@ class Player:
     def __init__(self):
         self.next_x = 0
         self.next_y = 0
-        self.mau = 1000
+        self.health = 1000
         self.tancong = 50
         self.walkCount = 0
-        self.health = 10
+        self.health = 500
         self.thu = 20
         self.range = 200
         self.skills = []
@@ -25,14 +25,14 @@ class Player:
         self.E = 0
         self.x = 100
         self.y = 100
-        self.hitbox = (self.x, self.y, 200, 200)
+        self.hitbox = (self.x, self.y, 20, 20)
         self.tonTai = True
 
     def move(self,next_x, next_y,change):
         if change:
             self.next_x = next_x
             self.next_y = next_y
-        kc = tinhToan.khoangCach(self.x, self.y, self.next_x, self.next_y)
+        kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
         self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
         self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
         self.hitbox = (self.x, self.y, 200, 200)
@@ -45,24 +45,25 @@ class Player:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x-25, self.y-25))
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
-        pygame.draw.rect(win, (0, 128, 0),(self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (5 * (10 - self.health)), 10))
-
+        pygame.draw.rect(win, (255, 0,  0),(self.hitbox[0] - 14, self.hitbox[1] - 22, 50, 10))
+        pygame.draw.rect(win, (0, 128, 0),
+                         (self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 0
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 100, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
 
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
                                         pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
-                                       pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 200, start_x, start_y, end_x,
+                                       pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 20, start_x, start_y, end_x,
                         end_y, 200, 6))
         self.W = 0
 
 
-    def ultilmate(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 150, end_x, end_y, end_x, end_y, 300, 1))
+    def ultimate(self, win, start_x, start_y, end_x, end_y):
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 30, end_x, end_y, end_x, end_y, 300, 1))
         self.E = 0
 
 
