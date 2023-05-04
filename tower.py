@@ -2,17 +2,18 @@ import pygame.draw
 
 
 class Tower:
-    def __int__(self):
+    def __init__(self, img, x, y):
         self.health = 1000
         self.range = 300
+        self.img = img
         #self.hinhanh =
-        self.x = 100
-        self.y = 100
+        self.x = x
+        self.y = y
         self.tonTai = True
 
     def draw(self, win):
-        #win.blit(self.img, (self.x, self.y))
-        pygame.draw.circle(surface=win, center=(20, 20), radius=self.range, width=2)
+        win.blit(self.img, (self.x, self.y))
+
 
 
     def biDanhTrung(self, chiSo):

@@ -1,10 +1,10 @@
 import pygame.image
 import skill
-import tinhToan
+import calculator
 
 
 class Minion:
-    def __init__(self, ben, x):
+    def __init__(self, ben, x, y):
         self.img = [pygame.image.load(r"picture\minion\linh1.png"),
                     pygame.image.load(r"picture\minion\linh2.png"),
                     pygame.image.load(r"picture\minion\linh3.png")]
@@ -12,16 +12,18 @@ class Minion:
                     pygame.image.load(r"picture\minion\linh2e.png"),
                     pygame.image.load(r"picture\minion\linh3e.png")]
         self.health = 100
-        self.range = 40
+        self.range = 50
         self.walkCount = 0
-        self.skill = []
+        self.skills = []
         self.health = 10
         self.x = x
-        self.y = 250
+        self.y = y
         self.tonTai = True
-        self.hitbox = (self.x, self.y, 200, 200)
+        self.hitbox = (self.x, self.y, 30, 30)
         self.ben = ben
-        self.vel = 1
+        self.vel = 2
+        self.next_x = 1239 if ben else 153
+        self.next_y = 151 if ben else 623
 
     def draw(self, win):
 
@@ -33,20 +35,18 @@ class Minion:
         else:
             win.blit(self.img[self.walkCount // 3], (self.x, self.y))
         self.walkCount += 1
+
     def move(self, ene, minions):
-        minx, miny = tinhToan.find(self, ene, minions)
-        kc = tinhToan.khoangCach(self.x, self.y, minx, miny)
-        if self.ben:
-            phia = 1
-        else:
-            phia = -1
-        if kc > self.range:
-            self.x += self.vel * phia
-        if self.x >= 1300:
-            self.x = 1250
-        if self.x <= 0:
-            self.x = 0
-        self.hitbox = (self.x, self.y, 200, 200)
+        minx, miny = calculator.find(self, ene, minions)
+        kcDich = calculator.khoangCach(self.x, self.y, minx, miny)
+        kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
+
+
+        if kcDich > self.range:
+            self.x = ((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.x
+            self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
+
+        self.hitbox = (self.x, self.y, 20, 20)
 
     def hitted(self, enemyskill):
         self.health -= enemyskill.atk
