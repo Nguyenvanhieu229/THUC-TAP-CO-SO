@@ -45,7 +45,7 @@ class Enemy:
         self.Q = 0
         self.W = 0
         self.E = 0
-        self.x = 100
+        self.x = 1300
         self.y = 100
         self.hitbox = (self.x, self.y, 50, 50)
         self.tonTai = True
@@ -84,7 +84,7 @@ class Enemy:
             self.tonTai = False
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
-        self.Q = 0
+        self.Q = 100
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
 
 
@@ -93,12 +93,12 @@ class Enemy:
                                         pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
                                        pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 20, start_x, start_y, end_x,
                         end_y, 200, 6))
-        self.W = 0
+        self.W = 150
 
 
     def ultimate(self, win, start_x, start_y, end_x, end_y):
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 30, end_x, end_y, end_x, end_y, 300, 1))
-        self.E = 0
+        self.E = 200
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":

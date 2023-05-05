@@ -10,5 +10,12 @@ def find(a, b, c):
             miny = i.y
     return (minx, miny)
 
+def checkInsideEclip(x0, y0, x, y, a, b):
+
+    kc = ((x-x0)**2)/(a**2) + ((y-y0)**2)/(b**2)
+    if kc <= 1:
+        return True
+    return False
+
 
 

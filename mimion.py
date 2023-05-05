@@ -48,6 +48,9 @@ class Minion:
 
         self.hitbox = (self.x, self.y, 20, 20)
 
+    def attack(self):
+        pass
+
     def hitted(self, enemyskill):
         self.health -= enemyskill.atk
         if self.health <= 0:
