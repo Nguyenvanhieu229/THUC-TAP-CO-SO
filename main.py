@@ -2,7 +2,6 @@ import pygame
 
 import calculator
 import skill as skill
-
 import player
 import mimion
 import enemy
@@ -14,205 +13,191 @@ import tru
 
 pygame.init()
 
-
-win = pygame.display.set_mode((1366, 768))
-bg = pygame.image.load(r"picture/bacg.png")
-clock = pygame.time.Clock()
-clock2 = pygame.time.Clock()
-man = player.Player()
-ene = enemy.Enemy()
-redTurret = tru.Turret(pygame.image.load(r"picture/truDo.png"), 1008, 125)
-blueTurret = tru.Turret(pygame.image.load(r"picture/truXanh.png"), 330, 470)
-reset = 0
-redTower = tower.Tower(pygame.image.load(r"picture/nhaDo.png"), 1190, 0)
-blueTower = tower.Tower(pygame.image.load(r"picture/nhaXanh.png"), 10, 600)
-
-run = True
-run2 = True
-count = 0
-minionsPlayer = []
-minionsEnemy = []
-skills = []
-time = [0, 0, 0]
-tickcount = 0
-
-
-
-
-def redrawWindow(change):
-
-    win.blit(bg, (0, 0))
-
-    redTurret.draw(win)
-
-    blueTurret.draw(win)
-    redTower.draw(win)
-    blueTower.draw(win)
-
-    for skill in ene.skills:
-        skill.draw(win)
-
-    for skill in man.skills:
-        skill.draw(win)
-
-    for minion in minionsPlayer:
-        minion.draw(win)
-    for minion in minionsEnemy:
-        minion.draw(win)
-
-    man.draw(win)
-    ene.draw(win)
-
-    pygame.display.update()
-
-
-
-def playerAttack():
-    keys = pygame.key.get_pressed()
-    # giam thoi gian hoi chieu cua ba chieu
-
-    man.Q = 0 if man.Q <= 0 else man.Q - 1
-    man.W = 0 if man.W <= 0 else man.W - 1
-    man.E = 0 if man.E <= 0 else man.E - 1
-
-    #tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
-    if keys[pygame.K_e] and man.E == 0:
-        man.attack(win, "E", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
-    elif keys[pygame.K_w] and man.W == 0:
-        man.attack(win, "W", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
-    elif keys[pygame.K_q] and man.Q == 0:
-        man.attack(win, "Q", man.x, man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
-
-def settings():
-    run = True
-    change = False
-    events = pygame.event.get()
-    for event in events:
-        if event.type == pygame.QUIT:
-            run = False
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-            change = True
-    return (run, change)
-
 def ktraHitBox(a, b):
-
     if a.hitbox[0] <= b.hitbox[0] and a.hitbox[0] + a.hitbox[2] >= b.hitbox[0] \
             and a.hitbox[1] <= b.hitbox[1] and a.hitbox[1] + a.hitbox[3] >= b.hitbox[1]:
         return True
     return False
 
 
-def enemyAttack():
 
-    ene.Q = 0 if ene.Q <= 0 else ene.Q - 1
-    ene.W = 0 if ene.W <= 0 else ene.W - 1
-    ene.E = 0 if ene.E <= 0 else ene.E - 1
+class GamePlay:
 
-    kc = calculator.khoangCach(ene.x, ene.y, man.x, man.y)
+    def __init__(self):
+        self.win = pygame.display.set_mode((1366, 768))
+        self.bg = pygame.image.load(r"picture/bacg.png")
+        self.clock = pygame.time.Clock()
+        self.clock2 = pygame.time.Clock()
+        self.man = player.Player()
+        self.ene = enemy.Enemy()
+        self.redTurret = tru.Turret(pygame.image.load(r"picture/truDo.png"), 1008, 125)
+        self.blueTurret = tru.Turret(pygame.image.load(r"picture/truXanh.png"), 330, 470)
+        self.reset = 0
+        self.redTower = tower.Tower(pygame.image.load(r"picture/nhaDo.png"), 1190, 0)
+        self.blueTower = tower.Tower(pygame.image.load(r"picture/nhaXanh.png"), 10, 600)
 
-    if kc < 100 and ene.E == 0:
-        ene.attack(win, "E", ene.x, ene.y, man.x + 10, man.y + 10)
-    elif kc < 200 and ene.W == 0:
-        ene.attack(win, "W", ene.x, ene.y, man.x + 10, man.y + 10)
-    elif kc < 100 and ene.Q == 0:
-        ene.attack(win, "Q", ene.x, ene.y, man.x + 10, man.y + 10)
+        self.run = True
+        self.run2 = True
+        self.count = 0
+        self.minionsPlayer = []
+        self.minionsEnemy = []
+        self.skills = []
+        self.time = [0, 0, 0]
+        self.tickcount = 0
 
-def playMove():
-    global man
-    global ene
-    global minionsEnemy
-    global minionsPlayer
+    def settings(self):
+        self.run = True
+        self.change = False
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.run = False
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                self.change = True
+        return (self.run, self.change)
 
-    man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], change)
-    ene.move(man, time[0] * 60 + time[1])
+    def redrawWindow(self, change):
 
-    for minion in minionsPlayer:
-        minion.move(ene, minionsEnemy)
+        self.win.blit(self.bg, (0, 0))
 
-    for minion in minionsEnemy:
-        minion.move(man, minionsPlayer)
+        #vẽ đạn từ trụ
+        if self.redTurret.skills:
+            self.redTurret.skills.draw(self.win, self.man)
+        if self.blueTurret.skills:
+            self.blueTurret.skills.draw(self.win, self.ene)
 
-def playEvent():
+        #vẽ nhà chính và trụ
+        self.redTurret.draw(self.win)
+        self.blueTurret.draw(self.win)
+        self.redTower.draw(self.win)
+        self.blueTower.draw(self.win)
 
-    global minionsPlayer
-    global minionsEnemy
+        for skill in self.ene.skills:
+            skill.draw(self.win)
 
-    if (time[0] * 60 + time[1]) % 10 == 0 and time[2] == 0:
-        minionsEnemy.append(mimion.Minion(False, 1239, 153))
-        minionsPlayer.append((mimion.Minion(True, 152, 623)))
+        for skill in self.man.skills:
+            skill.draw(self.win)
 
-    playMove()
+        for minion in self.minionsPlayer:
+            minion.draw(self.win)
+        for minion in self.minionsEnemy:
+            minion.draw(self.win)
 
-    for sk in ene.skills:
-        if ktraHitBox(sk, man):
-            man.hitted(sk)
+        self.man.draw(self.win)
+        self.ene.draw(self.win)
+
+        pygame.display.update()
+
+    def turretAttack(self):
+
+        self.redTurret.attack(self.man, self.minionsPlayer)
+        self.blueTurret.attack(self.ene, self.minionsEnemy)
+    def playMove(self):
+
+        self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
+        self.ene.move(self.man, self.time[0] * 60 + self.time[1])
+
+        for minion in self.minionsPlayer:
+            minion.move(self.ene, self.minionsEnemy)
+
+        for minion in self.minionsEnemy:
+            minion.move(self.man, self.minionsPlayer)
+
+    def playerAttack(self):
+        keys = pygame.key.get_pressed()
+        # giam thoi gian hoi chieu cua ba chieu
+
+        self.man.Q = 0 if self.man.Q <= 0 else self.man.Q - 1
+        self.man.W = 0 if self.man.W <= 0 else self.man.W - 1
+        self.man.E = 0 if self.man.E <= 0 else self.man.E - 1
+
+        # tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
+        if keys[pygame.K_e] and self.man.E == 0:
+            self.man.attack(self.win, "E", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+        elif keys[pygame.K_w] and self.man.W == 0:
+            self.man.attack(self.win, "W", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+        elif keys[pygame.K_q] and self.man.Q == 0:
+            self.man.attack(self.win, "Q", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+
+    def enemyAttack(self):
+
+        self.ene.Q = 0 if self.ene.Q <= 0 else self.ene.Q - 1
+        self.ene.W = 0 if self.ene.W <= 0 else self.ene.W - 1
+        self.ene.E = 0 if self.ene.E <= 0 else self.ene.E - 1
+
+        kc = calculator.khoangCach(self.ene.x, self.ene.y, self.man.x, self.man.y)
+
+        if kc < 100 and self.ene.E == 0:
+            self.ene.attack(self.win, "E", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
+        elif kc < 200 and self.ene.W == 0:
+            self.ene.attack(self.win, "W", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
+        elif kc < 100 and self.ene.Q == 0:
+            self.ene.attack(self.win, "Q", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
+
+    def playEvent(self):
+
+        if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
+            self.minionsEnemy.append(mimion.Minion(False, 1239, 153))
+            self.minionsPlayer.append((mimion.Minion(True, 152, 623)))
+
+        self.playMove()
+
+        for sk in self.ene.skills:
+            if ktraHitBox(sk, self.man):
+                self.man.hitted(sk)
+
+        for minion in self.minionsPlayer:
+            minion.skills.append(
+                skill.Skill(pygame.image.load(r"picture/bullet.png"), 5, minion.x, minion.y, self.ene.x, self.ene.y, 10, 1))
+            for sk in minion.skills:
+                if ktraHitBox(sk, self.ene):
+                    self.ene.hitted(sk)
+
+        for minion in self.minionsEnemy:
+            minion.skills.append(
+                skill.Skill(pygame.image.load(r"picture/bullet.png"), 5, minion.x, minion.y, self.ene.x, self.ene.y, 10, 1))
+            for sk in minion.skills:
+                if ktraHitBox(sk, self.man):
+                    self.man.hitted(sk)
+
+        for red in self.minionsPlayer:
+            for blue in self.minionsEnemy:
+                if ktraHitBox(red, blue):
+                    red.hitted(blue.skill[0])
+                    blue.hitted(red.skill[0])
+
+        for sk in self.man.skills:
+            if ktraHitBox(sk, self.ene) or ktraHitBox(self.ene, sk):
+                self.ene.hitted(sk)
 
 
-    for minion in minionsPlayer:
-        minion.skills.append(skill.Skill(pygame.image.load(r"picture/bullet.png"), 5, minion.x, minion.y, ene.x,ene.y, 10, 1))
-        for sk in minion.skills:
-            if ktraHitBox(sk, man):
-                man.hitted(sk)
+        self.minionsPlayer = list(filter(lambda x: x.tonTai, self.minionsPlayer[:]))  # Loc cac doi tuong linh con song
+        self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
+        self.ene.skills = list(filter(lambda x: x.tonTai, self.ene.skills[:]))
+        self.man.skills = list(filter(lambda x: x.tonTai, self.man.skills[:]))
+    def play(self):
 
-    for minion in minionsEnemy:
-        minion.skills.append(skill.Skill(pygame.image.load(r"picture/bullet.png"), 5, minion.x, minion.y, ene.x, ene.y, 10, 1))
-        for sk in minion.skills:
-            if ktraHitBox(sk, man):
-                man.hitted(sk)
+        while self.run:
+            self.clock.tick(30)
+            if self.time[2] == 30:
+                self.time[1] += 1
+                self.time[2] = 0
+            if self.time[1] == 60:
+                self.time[0] += 1
+                self.time[1] = 0
 
-    for red in minionsPlayer:
-        for blue in minionsEnemy:
-            if ktraHitBox(red, blue):
-                red.hitted(blue.skill[0])
-                blue.hitted(red.skill[0])
+            self.change = False
+            self.run, self.change = self.settings()
 
-    for sk in man.skills:
-        if ktraHitBox(sk, ene) or ktraHitBox(ene, sk):
-            ene.hitted(sk)
+            self.playerAttack()
+            self.enemyAttack()
+            self.turretAttack()
 
-    minionsPlayer = list(filter(lambda x : x.tonTai, minionsPlayer[:])) #Loc cac doi tuong linh con song
-    minionsEnemy = list(filter(lambda x: x.tonTai, minionsEnemy[:])) #Loc cac doi thuong linh con song
-    ene.skills = list(filter(lambda x : x.tonTai, ene.skills[:]))
-    man.skills = list(filter(lambda x : x.tonTai, man.skills[:]))
+            self.playEvent()
 
-def turretAttack():
-    global blueTurret
-    global redTurret
+            self.redrawWindow(self.change)
 
-    redTurret.attack(man, minionsPlayer)
-    blueTurret.attack(ene, minionsEnemy)
+            self.time[2] += 1
 
-def gameInit():
-    global run
-    global change
-    global clock
-
-    while run:
-        clock.tick(30)
-        if time[2] == 30:
-            time[1] += 1
-            time[2] = 0
-        if time[1] == 60:
-            time[0] += 1
-            time[1] = 0
-
-        change = False
-        run, change = settings()
-
-        playerAttack()
-        enemyAttack()
-        turretAttack()
-
-        playEvent()
-
-        redrawWindow(change)
-
-
-        time[2] += 1
-
-    pygame.quit()
-
-
-
-
+        pygame.quit()
 

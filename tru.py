@@ -2,6 +2,7 @@ import pygame.image
 
 import calculator
 import skill
+import autoSkill
 
 
 class Turret:
@@ -21,8 +22,6 @@ class Turret:
 
     def draw(self, win):
 
-        if self.skills != None:
-            self.skills.draw(win)
 
         if self.status:
             pygame.draw.ellipse(win, color="red", rect=(self.x - 70, self.y + 50, 240, 170), width=2)
@@ -41,13 +40,13 @@ class Turret:
             if calculator.checkInsideEclip(self.x + 50, self.y + 135, i.x, i.y, 120, 85):
                 if self.cho == 0:
                     self.cho = 100
-                    self.skills = skill.Skill([self.imgatk], 50, self.x, self.y, i.x, i.y, 220, 1)
+                    self.skills = autoSkill.AutoSkill([self.imgatk], 50, self.x, self.y, i, 220, 1)
                 return
         if calculator.checkInsideEclip(self.x + 50, self.y + 135, ene.x, ene.y, 120, 85):
             if self.cho == 0:
                 self.cho = 100
                 print("tan cong")
-                self.skills = skill.Skill([self.imgatk], 50, self.x, self.y, ene.x - 25, ene.y - 25, 220, 1)
+                self.skills = autoSkill.AutoSkill([self.imgatk], 50, self.x, self.y, ene, 220, 1)
 
             self.status = True
             return

@@ -8,7 +8,9 @@ top.geometry("1366x768")
 
 def my_command():
     top.destroy()
-    main.gameInit()
+    game = main.GamePlay()
+    game.play()
+
 
 
 bg1 = PhotoImage(file=r"C:\Users\admin\Downloads\342397817_715529440345909_3965517901682078266_n.png")
