@@ -95,12 +95,15 @@ def settings():
     return (run, change)
 
 def ktraHitBox(a, b):
+
     if a.hitbox[0] <= b.hitbox[0] and a.hitbox[0] + a.hitbox[2] >= b.hitbox[0] \
             and a.hitbox[1] <= b.hitbox[1] and a.hitbox[1] + a.hitbox[3] >= b.hitbox[1]:
         return True
     return False
 
+
 def enemyAttack():
+
     ene.Q = 0 if ene.Q <= 0 else ene.Q - 1
     ene.W = 0 if ene.W <= 0 else ene.W - 1
     ene.E = 0 if ene.E <= 0 else ene.E - 1
@@ -185,7 +188,6 @@ def gameInit():
     global clock
 
     while run:
-
         clock.tick(30)
         if time[2] == 30:
             time[1] += 1
@@ -195,7 +197,7 @@ def gameInit():
             time[1] = 0
 
         change = False
-        run, change =  settings()
+        run, change = settings()
 
         playerAttack()
         enemyAttack()
