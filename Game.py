@@ -11,7 +11,6 @@ def my_command():
     game.play()
 
 
-
 bg1 = PhotoImage(file=r"picture\342397817_715529440345909_3965517901682078266_n.png")
 label1 = Label(top, image=bg1)
 click_btn = PhotoImage(file=r"picture\342483983_974369890373765_7370958653130376131_n.png")

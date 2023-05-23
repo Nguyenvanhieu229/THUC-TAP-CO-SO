@@ -11,8 +11,8 @@ class Minion:
                     pygame.image.load(r"picture\minion\redthang-removebg-preview.png"),
                     pygame.image.load(r"picture\minion\redtrai-removebg-preview.png")]
         self.img2 = [pygame.image.load(r"picture\minion\bluephai.png"),
-                    pygame.image.load(r"picture\minion\bluethang.png"),
-                    pygame.image.load(r"picture\minion\bluetrai.png")]
+                     pygame.image.load(r"picture\minion\bluethang.png"),
+                     pygame.image.load(r"picture\minion\bluetrai.png")]
         self.health = 100
         self.range = 200
         self.walkCount = 0
@@ -46,7 +46,6 @@ class Minion:
         minx, miny = calculator.find(self, ene, minions)
         kcDich = calculator.khoangCach(self.x, self.y, minx, miny)
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
-
 
         if kcDich > self.range:
             self.x = ((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.x

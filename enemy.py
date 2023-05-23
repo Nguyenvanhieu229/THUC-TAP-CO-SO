@@ -56,7 +56,7 @@ class Enemy:
         if reset % 2 == 0:
             self.next_x, self.next_y = random.randint(man.x - 20, man.x+20), random.randint(man.y-20, man.y+20)
 
-        #minx, miny = tinhToan.find(self, man, minionPlayer)
+        # minx, miny = tinhToan.find(self, man, minionPlayer)
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
         if kc > self.range:
             self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x

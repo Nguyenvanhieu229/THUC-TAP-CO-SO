@@ -32,7 +32,7 @@ class Player:
         self.hitbox = (self.x, self.y, 20, 20)
         self.tonTai = True
 
-    def move(self,next_x, next_y,change):
+    def move(self, next_x, next_y, change):
         if change:
             self.next_x = next_x
             self.next_y = next_y
@@ -60,21 +60,19 @@ class Player:
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
-
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1a.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/skill2-removebg-preview.png")], 20, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2a.png")], 20, start_x, start_y, end_x, end_y, 200, 1))
         self.W = 150
 
-
-    def ultimate(self, win, start_x, start_y, end_x, end_y):
-        self.x = end_x
-        self.y = end_y
-        self.next_x = end_x
-        self.next_y = end_y
-        self.E = 500
-
+    def ultimate(self, end_x, end_y):
+        self.x = end_x + 75
+        self.y = end_y + 80
+        self.next_x = end_x + 75
+        self.next_y = end_y + 80
+        self.E = 100
+        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/main character/skills/skill3a.png")], 100, end_x, end_y, 100, 1, 30))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":
@@ -82,7 +80,7 @@ class Player:
         elif skill == "W":
             self.skill2(win, start_x, start_y, end_x, end_y)
         elif skill == "E":
-            self.ultimate(win, start_x, start_y, end_x, end_y)
+            self.ultimate(end_x, end_y)
 
     def hitted(self, enemyskill):
         self.health -= enemyskill.atk

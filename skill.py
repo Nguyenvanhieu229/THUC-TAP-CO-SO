@@ -9,7 +9,7 @@ class Skill:
         self.start_x = start_x
         self.start_y = start_y
         self.walkCount = 0
-        self.vel = 10
+        self.vel = 6
         self.tonTai = True
         self.hitbox = (start_x - 2,start_y - 2, 10, 10)
         self.soAnh = soAnh

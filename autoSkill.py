@@ -19,6 +19,8 @@ class AutoSkill(skill.Skill):
         kc = calculator.khoangCach(self.start_x, self.start_y, self.end_x, self.end_y)
         if kc != 0 and self.tonTai:
             win.blit(self.img[self.walkCount], (self.start_x, self.start_y))
+        if mucTieu.hitted(self):
+            self.tonTai = False
         self.start_x = ((self.end_x - self.start_x) * self.vel / kc) + self.start_x if (self.vel < kc and kc != 0) else self.end_x
         self.start_y = ((self.end_y - self.start_y) * self.vel / kc) + self.start_y if (self.vel < kc and kc != 0) else self.end_y
         self.hitbox = (self.start_x - 2, self.start_y - 2, 20, 20)

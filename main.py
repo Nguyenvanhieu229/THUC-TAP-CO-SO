@@ -65,42 +65,41 @@ class GamePlay:
 
 
         #kiem tra xem nha chinh hai ben con ton tai hay khong
-        if self.redTurret.tonTai == False or self.blueTurret.tonTai == False:
+        if self.redTurret.tonTai == False or not self.blueTurret.tonTai:
             self.run = False
-
         return (self.run, self.change)
 
     def redrawWindow(self, change):
 
-        #ve nen
+        # ve nen
         self.win.blit(self.bg, (0, 0))
-
-        #vẽ đạn từ trụ
+        self.win.blit(pygame.image.load(r"picture/main character/skills/skill3a.png"),(100,200))
+        # vẽ đạn từ trụ
         if self.redTurret.skills:
             self.redTurret.skills.draw(self.win, self.man)
         if self.blueTurret.skills:
             self.blueTurret.skills.draw(self.win, self.ene)
 
-        #vẽ nhà chính và trụ
+        # vẽ nhà chính và trụ
         self.redTurret.draw(self.win)
         self.blueTurret.draw(self.win)
         self.redTower.draw(self.win)
         self.blueTower.draw(self.win)
 
-        #ve skill cua nhan vat va may
+        # ve skill cua nhan vat va may
         for skill in self.ene.skills:
             skill.draw(self.win)
 
         for skill in self.man.skills:
             skill.draw(self.win)
 
-        #ve linh hai ben
+        # ve linh hai ben
         for minion in self.minionsPlayer:
             minion.draw(self.win)
         for minion in self.minionsEnemy:
             minion.draw(self.win)
 
-        #ve nhan vat nguoi va may
+        # ve nhan vat nguoi va may
         self.man.draw(self.win)
         self.ene.draw(self.win)
 
@@ -108,19 +107,19 @@ class GamePlay:
 
     def turretAttack(self):
         '''
-        Tru tan cong linh va nguoi choi
-        :return: void
+            Tru tan cong linh va nguoi choi
+            :return: void
         '''
         self.redTurret.attack(self.man, self.minionsPlayer)
         self.blueTurret.attack(self.ene, self.minionsEnemy)
 
     def playMove(self):
 
-        #nhan vat do nguoi choi va may di chuyen
+        # nhan vat do nguoi choi va may di chuyen
         self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
         self.ene.move(self.man, self.time[0] * 60 + self.time[1])
 
-        #linh di chuyen
+        # linh di chuyen
         for minion in self.minionsPlayer:
             minion.move(self.ene, self.minionsEnemy)
 
@@ -138,16 +137,17 @@ class GamePlay:
 
         # tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
         if keys[pygame.K_e] and self.man.E == 0:
-            self.man.attack(self.win, "E", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+            self.man.attack(self.win, "E", self.man.x, self.man.y, pygame.mouse.get_pos()[0] - 85, pygame.mouse.get_pos()[1] - 110)
         elif keys[pygame.K_w] and self.man.W == 0:
-            self.man.attack(self.win, "W", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
+            self.man.attack(self.win, "W", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 12, pygame.mouse.get_pos()[1] + 12)
         elif keys[pygame.K_q] and self.man.Q == 0:
             self.man.attack(self.win, "Q", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
         elif keys[pygame.K_a] and self.man.A == 0:
             (x, y) = calculator.find(self.man, self.redTurret if calculator.khoangCach(self.man.x, self.man.y, self.redTurret.x, self.redTurret.y)
-            < calculator.khoangCach(self.man.x, self.man.y, self.redTower.x, self.redTower.y) else self.redTower, self.minionsEnemy)
+                < calculator.khoangCach(self.man.x, self.man.y, self.redTower.x, self.redTower.y) else self.redTower, self.minionsEnemy)
             if calculator.khoangCach(self.man.x, self.man.y, x, y) < self.man.range:
                 self.man.danhThuong(x, y)
+
     def enemyAttack(self):
 
         self.ene.Q = 0 if self.ene.Q <= 0 else self.ene.Q - 1
@@ -170,46 +170,46 @@ class GamePlay:
 
     def playEvent(self):
 
-        #sinh linh
+        # sinh linh
         if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mimion.Minion(False, 1239, 153))
             self.minionsPlayer.append((mimion.Minion(True, 152, 623)))
 
-        #thuc hien cac viec di chuyen
+        # thuc hien cac viec di chuyen
         self.playMove()
 
 
-        #nguoi bi danh boi may
+        # nguoi bi danh boi may
         for sk in self.ene.skills:
             if ktraHitBox(sk, self.man):
                 self.man.hitted(sk)
 
-        #nguoi bi danh boi linh
+        # nguoi bi danh boi linh
         for minion in self.minionsEnemy:
             for sk in minion.skills:
                 if ktraHitBox(sk, self.man):
                     self.man.hitted(sk)
 
-        #nguoi bi danh boi tru
+        # nguoi bi danh boi tru
         if ktraHitBox(self.man, self.redTurret.skills):
             self.man.hitted(self.redTurret.skills)
 
-        #may bi danh boi nguoi
+        # may bi danh boi nguoi
         for sk in self.man.skills:
             if ktraHitBox(sk, self.ene):
                 self.ene.hitted(sk)
 
-        #may bi danh boi linh
+        # may bi danh boi linh
         for minion in self.minionsPlayer:
             for sk in minion.skills:
                 if ktraHitBox(sk, self.ene):
                     self.ene.hitted(sk)
 
-        #may bi danh boi tru
+        # may bi danh boi tru
         if ktraHitBox(self.ene, self.blueTurret.skills):
             self.ene.hitted(self.blueTurret.skills)
 
-        #linh bi danh boi tru
+        # linh bi danh boi tru
         for blue in self.minionsPlayer:
             if ktraHitBox(blue, self.redTurret.skills):
                 blue.hitted(self.redTurret.skills)
@@ -218,7 +218,7 @@ class GamePlay:
             if ktraHitBox(red, self.blueTurret.skills):
                 red.hitted(self.blueTurret.skills)
 
-        #linh bi danh boi nguoi
+        # linh bi danh boi nguoi
         for blue in self.minionsPlayer:
             for sk in self.ene.skills:
                 if ktraHitBox(blue, sk):
@@ -229,7 +229,7 @@ class GamePlay:
                 if ktraHitBox(red, sk):
                     red.hitted(sk)
 
-        #linh bi danh boi linh
+        # linh bi danh boi linh
         for blue in self.minionsPlayer:
             for red in self.minionsEnemy:
                 for sk in red.skills:
@@ -242,7 +242,7 @@ class GamePlay:
                     if ktraHitBox(sk, red):
                         red.hitted(sk)
 
-        #tru bi danh boi nhan vat
+        # tru bi danh boi nhan vat
         for sk in self.man.skills:
             if ktraHitBox(self.redTurret, sk):
                 self.redTurret.hitted(sk)
@@ -251,7 +251,7 @@ class GamePlay:
             if ktraHitBox(self.blueTurret, sk):
                 self.blueTurret.hitted(sk)
 
-        #tru bi danh boi linh
+        # tru bi danh boi linh
         for blue in self.minionsPlayer:
             for sk in blue.skills:
                 if ktraHitBox(sk, self.redTurret):
@@ -262,7 +262,7 @@ class GamePlay:
                 if ktraHitBox(sk, self.blueTurret):
                     self.blueTurret.hitted(sk)
 
-        #nha bi danh boi nhan vat
+        # nha bi danh boi nhan vat
         for sk in self.man.skills:
             if ktraHitBox(self.redTower, sk):
                 self.redTower.hitted(sk)
@@ -271,7 +271,7 @@ class GamePlay:
             if ktraHitBox(self.blueTower, sk):
                 self.blueTower.hitted(sk)
 
-        #nha bi danh boi linh
+        # nha bi danh boi linh
         for blue in self.minionsPlayer:
             for sk in blue.skills:
                 if ktraHitBox(sk, self.redTower):
