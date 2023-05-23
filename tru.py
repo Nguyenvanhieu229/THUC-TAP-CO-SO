@@ -27,10 +27,13 @@ class Turret:
             pygame.draw.ellipse(win, color="red", rect=(self.x - 70, self.y + 50, 240, 170), width=2)
         else:
             pygame.draw.ellipse(win, color="green", rect=(self.x - 70, self.y + 50, 240, 170), width=2)
-        win.blit(self.img, (self.x, self.y))
-        pygame.draw.rect(win, (255, 0, 0),
-                         (self.hitbox[0] + 15, self.hitbox[1] - 22, 50 - (0.05 * (1000 - self.health)), 10))
-        pygame.draw.rect(win, color="blue", rect = (self.hitbox[0] + 15, self.hitbox[1] - 22, 50, 10), width = 2)
+
+        # ve hinh anh Tru neu tru con ton tai
+        if self.tonTai:
+            win.blit(self.img, (self.x, self.y))
+            pygame.draw.rect(win, (255, 0, 0),
+                             (self.hitbox[0] + 15, self.hitbox[1] - 22, 50 - (0.05 * (1000 - self.health)), 10))
+            pygame.draw.rect(win, color="blue", rect = (self.hitbox[0] + 15, self.hitbox[1] - 22, 50, 10), width = 2)
 
 
     def attack(self, ene, minions):
@@ -51,11 +54,12 @@ class Turret:
             self.status = True
             return
 
+    def hitted(self, enemySkill):
+        #tru chi bi tan cong boi don danh thuong
+        if enemySkill.vel == 8:
+            self.mau -= enemySkill.atk
 
-
-    def hitted(self, enemyskill):
-        self.mau -= enemyskill.atk
-        #am thanh
-        if self.mau <= 0:
-            self.tonTai = False
-            #game ket thuc
+            # am thanh
+            if self.mau <= 0:
+                self.tonTai = False
+                # game ket thuc

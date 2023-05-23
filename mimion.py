@@ -52,6 +52,9 @@ class Minion:
         pass
 
     def hitted(self, enemyskill):
+
         self.health -= enemyskill.atk
+        enemyskill.tonTai = False
+
         if self.health <= 0:
             self.tonTai = False

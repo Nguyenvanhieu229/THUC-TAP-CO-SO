@@ -11,14 +11,18 @@ class Tower:
         self.x = x
         self.y = y
         self.tonTai = True
+        self.hitbox = (self.x, self.y, 150, 150)
 
     def draw(self, win):
         win.blit(self.img, (self.x, self.y))
 
 
-    def hitted(self, chiSo):
-        self.mau -= chiSo
-        #am thanh
-        if self.mau <= 0:
-            self.tonTai = False
-            #game ket thuc
+    def hitted(self, enemySkill):
+        #nha chi bi tan cong boi don danh thuong
+        if enemySkill.vel == 8:
+            self.mau -= enemySkill.atk
+
+            #am thanh
+            if self.mau <= 0:
+                self.tonTai = False
+                #game ket thuc
