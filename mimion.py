@@ -7,12 +7,12 @@ import calculator
 
 class Minion:
     def __init__(self, ben, x, y):
-        self.img = [pygame.image.load(r"picture\minion\linh1.png"),
-                    pygame.image.load(r"picture\minion\linh2.png"),
-                    pygame.image.load(r"picture\minion\linh3.png")]
-        self.img2 = [pygame.image.load(r"picture\minion\linh1e.png"),
-                    pygame.image.load(r"picture\minion\linh2e.png"),
-                    pygame.image.load(r"picture\minion\linh3e.png")]
+        self.img = [pygame.image.load(r"picture\minion\redphai-removebg-preview.png"),
+                    pygame.image.load(r"picture\minion\redthang-removebg-preview.png"),
+                    pygame.image.load(r"picture\minion\redtrai-removebg-preview.png")]
+        self.img2 = [pygame.image.load(r"picture\minion\redphai-removebg-preview.png"),
+                    pygame.image.load(r"picture\minion\redthang-removebg-preview.png"),
+                    pygame.image.load(r"picture\minion\redtrai-removebg-preview.png")]
         self.health = 100
         self.range = 200
         self.walkCount = 0
@@ -30,13 +30,13 @@ class Minion:
 
     def draw(self, win):
 
-        if self.walkCount == 9:
+        if self.walkCount == 15:
             self.walkCount = 0
 
         if self.ben:
-            win.blit(self.img2[self.walkCount//3], (self.x, self.y))
+            win.blit(self.img2[self.walkCount//5], (self.x, self.y))
         else:
-            win.blit(self.img[self.walkCount // 3], (self.x, self.y))
+            win.blit(self.img[self.walkCount // 5], (self.x, self.y))
         self.walkCount += 1
 
     def move(self, ene, minions):

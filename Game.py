@@ -1,5 +1,4 @@
 from tkinter import *
-from tkinter import messagebox
 import main
 
 top = Tk()
@@ -13,9 +12,9 @@ def my_command():
 
 
 
-bg1 = PhotoImage(file=r"C:\Users\admin\Downloads\342397817_715529440345909_3965517901682078266_n.png")
+bg1 = PhotoImage(file=r"C:\Users\NGUYENHOAN\Documents\Zalo Received Files\342397817_715529440345909_3965517901682078266_n.png")
 label1 = Label(top, image=bg1)
-click_btn = PhotoImage(file=r"C:\Users\admin\Downloads\342483983_974369890373765_7370958653130376131_n.png")
+click_btn = PhotoImage(file=r"C:\Users\NGUYENHOAN\Documents\Zalo Received Files\342483983_974369890373765_7370958653130376131_n.png")
 playBtn = Button(top, image=click_btn, command=my_command)
 playBtn.place(x=1200, y=680)
 label1.pack()
