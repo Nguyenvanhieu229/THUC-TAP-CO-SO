@@ -1,6 +1,9 @@
 import pygame
 import math
+
+import autoSkill
 import calculator
+import not_move_skill
 import skill
 
 
@@ -23,6 +26,7 @@ class Player:
         self.Q = 0
         self.W = 0
         self.E = 0
+        self.A = 0
         self.x = 100
         self.y = 700
         self.hitbox = (self.x, self.y, 20, 20)
@@ -48,6 +52,11 @@ class Player:
         pygame.draw.rect(win, (255, 0,  0),(self.hitbox[0] - 14, self.hitbox[1] - 22, 50, 10))
         pygame.draw.rect(win, (0, 128, 0),
                          (self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+
+    def danhThuong(self, end_x, end_y):
+        self.A = 50
+        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
+                                                       5, end_x, end_y, 100, 1, 1))
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100

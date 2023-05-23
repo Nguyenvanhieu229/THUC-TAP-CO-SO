@@ -134,6 +134,7 @@ class GamePlay:
         self.man.Q = 0 if self.man.Q <= 0 else self.man.Q - 1
         self.man.W = 0 if self.man.W <= 0 else self.man.W - 1
         self.man.E = 0 if self.man.E <= 0 else self.man.E - 1
+        self.man.A = 0 if self.man.A <= 0 else self.man.A - 1
 
         # tan cong neu nut chieu duoc an va thoi gian hoi chieu bang 0
         if keys[pygame.K_e] and self.man.E == 0:
@@ -142,7 +143,11 @@ class GamePlay:
             self.man.attack(self.win, "W", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
         elif keys[pygame.K_q] and self.man.Q == 0:
             self.man.attack(self.win, "Q", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
-
+        elif keys[pygame.K_a] and self.man.A == 0:
+            (x, y) = calculator.find(self.man, self.redTurret if calculator.khoangCach(self.man.x, self.man.y, self.redTurret.x, self.redTurret.y)
+            < calculator.khoangCach(self.man.x, self.man.y, self.redTower.x, self.redTower.y) else self.redTower, self.minionsEnemy)
+            if calculator.khoangCach(self.man.x, self.man.y, x, y) < self.man.range:
+                self.man.danhThuong(x, y)
     def enemyAttack(self):
 
         self.ene.Q = 0 if self.ene.Q <= 0 else self.ene.Q - 1
@@ -157,7 +162,11 @@ class GamePlay:
             self.ene.attack(self.win, "W", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
         elif kc < 100 and self.ene.Q == 0:
             self.ene.attack(self.win, "Q", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
-
+        elif self.ene.A == 0:
+            (x, y) = calculator.find(self.man, self.blueTurret if calculator.khoangCach(self.man.x, self.man.y, self.blueTurret.x, self.blueTurret.y)
+            < calculator.khoangCach(self.ene.x, self.ene.y, self.blueTower.x, self.blueTower.y) else self.blueTower, self.minionsPlayer)
+            if calculator.khoangCach(self.ene.x, self.ene.y, x, y) < self.ene.range:
+                self.ene.danhThuong(x, y)
 
     def playEvent(self):
 
@@ -277,6 +286,39 @@ class GamePlay:
         self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
         self.ene.skills = list(filter(lambda x: x.tonTai, self.ene.skills[:]))
         self.man.skills = list(filter(lambda x: x.tonTai, self.man.skills[:]))
+
+        if self.blueTurret.skills and self.blueTurret.skills.tonTai == 0:
+            self.blueTurret.skills = None
+        if self.redTurret.skills and self.redTurret.skills.tonTai == 0:
+            self.redTurret.skills = None
+
+        for blue in self.minionsPlayer:
+            blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
+
+        for blue in self.minionsEnemy:
+            blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
+
+    def minionsAttack(self):
+        for blue in self.minionsPlayer:
+            (x, y) = calculator.find(self.ene,
+                                     self.redTurret if calculator.khoangCach(blue.x, blue.y, self.redTurret.x,
+                                                                             self.redTurret.y)
+                                                       < calculator.khoangCach(blue.x, blue.y, self.redTower.x,
+                                                                               self.redTower.y) else self.redTower,
+                                     self.minionsEnemy)
+            if calculator.khoangCach(blue.x, blue.y, x, y) < blue.range:
+                blue.attack(x, y)
+
+        for blue in self.minionsEnemy:
+            (x, y) = calculator.find(self.man,
+                                     self.blueTurret if calculator.khoangCach(blue.x, blue.y, self.blueTurret.x,
+                                                                             self.blueTurret.y)
+                                                       < calculator.khoangCach(blue.x, blue.y, self.blueTower.x,
+                                                                               self.blueTower.y) else self.blueTower,
+                                     self.minionsPlayer)
+            if calculator.khoangCach(blue.x, blue.y, x, y) < blue.range:
+                blue.attack(x, y)
+
     def play(self):
 
         while self.run:
@@ -294,6 +336,7 @@ class GamePlay:
             self.playerAttack()
             self.enemyAttack()
             self.turretAttack()
+            self.minionsAttack()
 
             self.playEvent()
 

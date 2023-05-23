@@ -11,9 +11,8 @@ class NotMoveSkill(skill.Skill):
             self.walkCount += 1
         else:
             self.walkCount = 0
-        self.tonTai -= 1
         if self.tonTai > 0:
             win.blit(self.img[self.walkCount], (self.start_x, self.start_y))
-
+        self.tonTai -= 1
 
 

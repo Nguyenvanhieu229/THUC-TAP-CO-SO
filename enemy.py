@@ -4,6 +4,7 @@ import math
 import random
 import player
 import skill
+import not_move_skill
 
 
 class Enemy:
@@ -45,6 +46,7 @@ class Enemy:
         self.Q = 0
         self.W = 0
         self.E = 0
+        self.A = 0
         self.x = 1300
         self.y = 100
         self.hitbox = (self.x, self.y, 50, 50)
@@ -99,6 +101,11 @@ class Enemy:
     def ultimate(self, win, start_x, start_y, end_x, end_y):
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 30, end_x, end_y, end_x, end_y, 300, 1))
         self.E = 200
+
+    def danhThuong(self, end_x, end_y):
+        self.A = 50
+        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
+                                                       5, end_x, end_y, 100, 1, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
         if skill == "Q":

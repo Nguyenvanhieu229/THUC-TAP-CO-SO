@@ -1,4 +1,6 @@
 import pygame.image
+
+import not_move_skill
 import skill
 import calculator
 
@@ -12,7 +14,7 @@ class Minion:
                     pygame.image.load(r"picture\minion\linh2e.png"),
                     pygame.image.load(r"picture\minion\linh3e.png")]
         self.health = 100
-        self.range = 50
+        self.range = 200
         self.walkCount = 0
         self.skills = []
         self.health = 10
@@ -22,6 +24,7 @@ class Minion:
         self.hitbox = (self.x, self.y, 30, 30)
         self.ben = ben
         self.vel = 2
+        self.cho = 0
         self.next_x = 1239 if ben else 153
         self.next_y = 151 if ben else 623
 
@@ -48,8 +51,12 @@ class Minion:
 
         self.hitbox = (self.x, self.y, 20, 20)
 
-    def attack(self):
-        pass
+    def attack(self, end_x, end_y):
+        self.cho = 30
+        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
+                                                       5, end_x, end_y, 100, 1, 1))
+        if len(self.skills) > 1:
+            self.skills.pop(0)
 
     def hitted(self, enemyskill):
 
