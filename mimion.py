@@ -10,9 +10,9 @@ class Minion:
         self.img = [pygame.image.load(r"picture\minion\redphai-removebg-preview.png"),
                     pygame.image.load(r"picture\minion\redthang-removebg-preview.png"),
                     pygame.image.load(r"picture\minion\redtrai-removebg-preview.png")]
-        self.img2 = [pygame.image.load(r"picture\minion\redphai-removebg-preview.png"),
-                    pygame.image.load(r"picture\minion\redthang-removebg-preview.png"),
-                    pygame.image.load(r"picture\minion\redtrai-removebg-preview.png")]
+        self.img2 = [pygame.image.load(r"picture\minion\bluephai.png"),
+                    pygame.image.load(r"picture\minion\bluethang.png"),
+                    pygame.image.load(r"picture\minion\bluetrai.png")]
         self.health = 100
         self.range = 200
         self.walkCount = 0
@@ -38,6 +38,9 @@ class Minion:
         else:
             win.blit(self.img[self.walkCount // 5], (self.x, self.y))
         self.walkCount += 1
+        pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0] - 5, self.hitbox[1] - 22, 50, 10))
+        pygame.draw.rect(win, (0, 128, 0),
+                         (self.hitbox[0] - 5, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
 
     def move(self, ene, minions):
         minx, miny = calculator.find(self, ene, minions)
