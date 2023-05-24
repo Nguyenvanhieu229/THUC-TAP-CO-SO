@@ -73,7 +73,6 @@ class GamePlay:
 
         # ve nen
         self.win.blit(self.bg, (0, 0))
-        self.win.blit(pygame.image.load(r"picture/main character/skills/skill3a.png"),(100,200))
         # vẽ đạn từ trụ
         if self.redTurret.skills:
             self.redTurret.skills.draw(self.win, self.man)

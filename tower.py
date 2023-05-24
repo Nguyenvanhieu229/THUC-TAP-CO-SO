@@ -14,8 +14,11 @@ class Tower:
         self.hitbox = (self.x, self.y, 150, 150)
 
     def draw(self, win):
-        win.blit(self.img, (self.x, self.y))
-
+        if self.tonTai:
+            win.blit(self.img, (self.x, self.y))
+            pygame.draw.rect(win, (255, 0, 0),
+                             (self.hitbox[0] + 65, self.hitbox[1], 50 - (0.05 * (1000 - self.health)), 10))
+            pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 65, self.hitbox[1], 50, 10), width=2)
 
     def hitted(self, enemySkill):
         #nha chi bi tan cong boi don danh thuong

@@ -17,7 +17,7 @@ class Minion:
         self.range = 200
         self.walkCount = 0
         self.skills = []
-        self.health = 10
+        self.health = 500
         self.x = x
         self.y = y
         self.tonTai = True
