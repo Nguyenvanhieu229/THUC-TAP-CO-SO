@@ -42,8 +42,8 @@ class Minion:
         pygame.draw.rect(win, (0, 128, 0),
                          (self.hitbox[0] - 5, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
 
-    def move(self, ene, minions):
-        minx, miny = calculator.find(self, ene, minions)
+    def move(self, ene, minions,turret):
+        minx, miny = calculator.find(self, ene, minions, turret)
         kcDich = calculator.khoangCach(self.x, self.y, minx, miny)
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
 

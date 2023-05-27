@@ -43,7 +43,8 @@ class GamePlay:
         self.reset = 0
         self.redTower = tower.Tower(pygame.image.load(r"picture/nhaDo.png"), 1190, 0)
         self.blueTower = tower.Tower(pygame.image.load(r"picture/nhaXanh.png"), 10, 600)
-
+        self.thoiGianHoiSinh = 90
+        self.thoiGianHoiSinhQuai = 90
         self.run = True
         self.run2 = True
         self.count = 0
@@ -119,15 +120,18 @@ class GamePlay:
     def playMove(self):
 
         # nhan vat do nguoi choi va may di chuyen
-        self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
-        self.ene.move(self.man, self.time[0] * 60 + self.time[1])
+        if self.man.health > 0:
+            self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
+            self.ene.move(self.man, self.time[0] * 60 + self.time[1])
+
+
 
         # linh di chuyen
         for minion in self.minionsPlayer:
-            minion.move(self.ene, self.minionsEnemy)
+            minion.move(self.ene, self.minionsEnemy, self.redTurret)
 
         for minion in self.minionsEnemy:
-            minion.move(self.man, self.minionsPlayer)
+            minion.move(self.man, self.minionsPlayer, self.blueTurret)
 
     def playerAttack(self):
         keys = pygame.key.get_pressed()
@@ -177,6 +181,14 @@ class GamePlay:
         if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mimion.Minion(False, 1239, 153))
             self.minionsPlayer.append((mimion.Minion(True, 152, 623)))
+
+        if self.man.health <= 0 :
+            self.thoiGianHoiSinh= self.thoiGianHoiSinh - 1
+            print(self.man.x, self.man.y)
+            if self.thoiGianHoiSinh == 0:
+                print("hs")
+                self.man = player.Player()
+                self.thoiGianHoiSinh = 90
 
         # thuc hien cac viec di chuyen
         self.playMove()

@@ -45,15 +45,8 @@ class Player:
 
 
     def draw(self,win):
-
-        self.choHoiSinh = self.choHoiSinh - 1
-
-        if self.health == 0 and self.choHoiSinh == 0:
-            self.skills = []
-            self.health = 1000
-            self.choHoiSinh = 300
-
         if self.health <= 0:
+            win.blit(self.hinhanhTrai[1],(self.x, self.y))
             return
 
         self.walkCount = self.walkCount + 1 if self.walkCount < 26 else 0
