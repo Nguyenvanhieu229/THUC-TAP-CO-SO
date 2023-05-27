@@ -63,10 +63,14 @@ class GamePlay:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 self.change = True
 
-
-        #kiem tra xem nha chinh hai ben con ton tai hay khong
-        if self.redTurret.tonTai == False or not self.blueTurret.tonTai:
+        if self.redTower.tonTai == False:
             self.run = False
+            #nguoi choi thang.
+        elif self.blueTower.tonTai == False:
+            self.run = False
+            #nguoi choi thua
+
+
         return (self.run, self.change)
 
     def redrawWindow(self, change):
@@ -197,6 +201,7 @@ class GamePlay:
         for sk in self.man.skills:
             if ktraHitBox(sk, self.ene):
                 self.ene.hitted(sk)
+
 
         # may bi danh boi linh
         for minion in self.minionsPlayer:
