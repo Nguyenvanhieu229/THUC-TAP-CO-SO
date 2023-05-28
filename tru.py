@@ -10,7 +10,7 @@ class Turret:
         self.health = 1000
         self.img = img
         self.atk = 50
-        self.skills = None
+        self.skills = []
         self.imgatk = pygame.image.load(r"picture/main character/skills/skill1.png")
         self.x = x
         self.y = y
@@ -36,30 +36,36 @@ class Turret:
             pygame.draw.rect(win, color="blue", rect = (self.hitbox[0] + 15, self.hitbox[1] - 22, 50, 10), width = 2)
 
 
-    def attack(self, ene, minions):
-        self.cho = 0 if self.cho <= 0 else self.cho - 1
-        self.status = False
+    def chonMucTieu(self, ene, minions):
+
         for i in minions:
             if calculator.checkInsideEclip(self.x + 50, self.y + 135, i.x, i.y, 120, 85):
-                if self.cho == 0:
-                    self.cho = 100
-                    self.skills = autoSkill.AutoSkill([self.imgatk], 50, self.x, self.y, i, 220, 1)
-                return
-        if calculator.checkInsideEclip(self.x + 50, self.y + 135, ene.x, ene.y, 120, 85):
-            if self.cho == 0:
-                self.cho = 100
-                print("tan cong")
-                self.skills = autoSkill.AutoSkill([self.imgatk], 50, self.x, self.y, ene, 220, 1)
+                return i
 
+        if calculator.checkInsideEclip(self.x + 50, self.y + 135, ene.x, ene.y, 120, 85):
             self.status = True
-            return
+            return ene
+
+
+    def attack(self, ene, minions):
+        #xu ly thoi gian cho trung chieu
+        self.cho = 0 if self.cho <= 0 else self.cho - 1
+        self.status = False
+
+        dich = self.chonMucTieu(ene, minions)
+
+        if dich and self.cho == 0:
+            self.cho = 45
+            self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")], 100,
+                               self.x + 20, self.y + 20, dich, 200, 1))
 
     def hitted(self, enemySkill):
         #tru chi bi tan cong boi don danh thuong
         if enemySkill.vel == 8:
-            self.mau -= enemySkill.atk
+            self.health -= enemySkill.atk
+            enemySkill.tonTai = enemySkill.tonTai -1
 
             # am thanh
-            if self.mau <= 0:
+            if self.health <= 0:
                 self.tonTai = False
                 # game ket thuc

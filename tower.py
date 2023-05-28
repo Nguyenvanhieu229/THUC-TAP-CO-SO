@@ -21,9 +21,11 @@ class Tower:
             pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 65, self.hitbox[1], 50, 10), width=2)
 
     def hitted(self, enemySkill):
+
         #nha chi bi tan cong boi don danh thuong
         if enemySkill.vel == 8:
-            self.mau -= enemySkill.atk
+            self.health -= enemySkill.atk
+            enemySkill.tonTai  = enemySkill - 1
 
             #am thanh
             if self.mau <= 0:

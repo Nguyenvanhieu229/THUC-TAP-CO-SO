@@ -89,6 +89,8 @@ class Player:
 
     def hitted(self, enemyskill):
         self.health -= enemyskill.atk
+        enemyskill.tonTai = enemyskill.tonTai - 1
+
         if self.health <= 0:
             self.tonTai = False
 

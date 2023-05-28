@@ -3,12 +3,12 @@ import pygame
 import calculator
 import skill as skill
 import player
-import mimion
+import minion as mn
 import enemy
 import player
 import skill
 import tower
-import mimion
+import minion
 import tru
 
 pygame.init()
@@ -66,7 +66,7 @@ class GamePlay:
 
         if self.redTower.tonTai == False:
             self.run = False
-            #nguoi choi thang.
+            #nguoi choi cvasfafadfed.
         elif self.blueTower.tonTai == False:
             self.run = False
             #nguoi choi thua
@@ -75,14 +75,15 @@ class GamePlay:
         return (self.run, self.change)
 
     def redrawWindow(self, change):
-
+        #HIeu thu
         # ve nen
         self.win.blit(self.bg, (0, 0))
         # vẽ đạn từ trụ
-        if self.redTurret.skills:
-            self.redTurret.skills.draw(self.win, self.man)
-        if self.blueTurret.skills:
-            self.blueTurret.skills.draw(self.win, self.ene)
+        for sk in self.redTurret.skills:
+            sk.draw(self.win)
+
+        for sk in self.blueTurret.skills:
+            sk.draw(self.win)
 
         # vẽ nhà chính và trụ
         self.redTurret.draw(self.win)
@@ -100,8 +101,13 @@ class GamePlay:
         # ve linh hai ben
         for minion in self.minionsPlayer:
             minion.draw(self.win)
+            for sk in minion.skills:
+                sk.draw(self.win)
+
         for minion in self.minionsEnemy:
             minion.draw(self.win)
+            for sk in minion.skills:
+                sk.draw(self.win)
 
         # ve nhan vat nguoi va may
         self.man.draw(self.win)
@@ -179,14 +185,12 @@ class GamePlay:
 
         # sinh linh
         if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
-            self.minionsEnemy.append(mimion.Minion(False, 1239, 153))
-            self.minionsPlayer.append((mimion.Minion(True, 152, 623)))
+            self.minionsEnemy.append(mn.Minion(False, 1239, 153))
+            self.minionsPlayer.append((mn.Minion(True, 152, 623)))
 
         if self.man.health <= 0 :
             self.thoiGianHoiSinh= self.thoiGianHoiSinh - 1
-            print(self.man.x, self.man.y)
             if self.thoiGianHoiSinh == 0:
-                print("hs")
                 self.man = player.Player()
                 self.thoiGianHoiSinh = 90
 
@@ -206,8 +210,9 @@ class GamePlay:
                     self.man.hitted(sk)
 
         # nguoi bi danh boi tru
-        if ktraHitBox(self.man, self.redTurret.skills):
-            self.man.hitted(self.redTurret.skills)
+        for sk in self.redTurret.skills:
+            if ktraHitBox(sk, self.man):
+                self.man.hitted(sk)
 
         # may bi danh boi nguoi
         for sk in self.man.skills:
@@ -222,17 +227,20 @@ class GamePlay:
                     self.ene.hitted(sk)
 
         # may bi danh boi tru
-        if ktraHitBox(self.ene, self.blueTurret.skills):
-            self.ene.hitted(self.blueTurret.skills)
+        for sk in self.blueTurret.skills:
+            if ktraHitBox(sk, self.ene):
+                self.ene.hitted(sk)
 
         # linh bi danh boi tru
         for blue in self.minionsPlayer:
-            if ktraHitBox(blue, self.redTurret.skills):
-                blue.hitted(self.redTurret.skills)
+            for sk in self.redTurret.skills:
+                if ktraHitBox(blue, sk):
+                    blue.hitted(sk)
 
         for red in self.minionsEnemy:
-            if ktraHitBox(red, self.blueTurret.skills):
-                red.hitted(self.blueTurret.skills)
+            for sk in self.blueTurret.skills:
+                if ktraHitBox(red, sk):
+                    red.hitted(sk)
 
         # linh bi danh boi nguoi
         for blue in self.minionsPlayer:
@@ -302,38 +310,24 @@ class GamePlay:
         self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
         self.ene.skills = list(filter(lambda x: x.tonTai, self.ene.skills[:]))
         self.man.skills = list(filter(lambda x: x.tonTai, self.man.skills[:]))
-
-        if self.blueTurret.skills and self.blueTurret.skills.tonTai == 0:
-            self.blueTurret.skills = None
-        if self.redTurret.skills and self.redTurret.skills.tonTai == 0:
-            self.redTurret.skills = None
+        self.redTurret.skills = list(filter(lambda x: x.tonTai, self.redTurret.skills[:]))
+        self.blueTurret.skills = list(filter(lambda x: x.tonTai, self.blueTurret.skills[:]))
 
         for blue in self.minionsPlayer:
             blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
 
         for blue in self.minionsEnemy:
             blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
+
+
 
     def minionsAttack(self):
-        for blue in self.minionsPlayer:
-            (x, y) = calculator.find(self.ene,
-                                     self.redTurret if calculator.khoangCach(blue.x, blue.y, self.redTurret.x,
-                                                                             self.redTurret.y)
-                                                       < calculator.khoangCach(blue.x, blue.y, self.redTower.x,
-                                                                               self.redTower.y) else self.redTower,
-                                     self.minionsEnemy)
-            if calculator.khoangCach(blue.x, blue.y, x, y) < blue.range:
-                blue.attack(x, y)
 
-        for blue in self.minionsEnemy:
-            (x, y) = calculator.find(self.man,
-                                     self.blueTurret if calculator.khoangCach(blue.x, blue.y, self.blueTurret.x,
-                                                                             self.blueTurret.y)
-                                                       < calculator.khoangCach(blue.x, blue.y, self.blueTower.x,
-                                                                               self.blueTower.y) else self.blueTower,
-                                     self.minionsPlayer)
-            if calculator.khoangCach(blue.x, blue.y, x, y) < blue.range:
-                blue.attack(x, y)
+        for blue in self.minionsPlayer:
+            blue.attack(self.ene, self.minionsEnemy, self.redTurret, self.redTower)
+
+        for red in self.minionsEnemy:
+            red.attack(self.man, self.minionsPlayer, self.blueTurret, self.blueTower)
 
     def play(self):
 

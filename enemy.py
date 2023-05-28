@@ -84,8 +84,10 @@ class Enemy:
 
 
     def hitted(self, sk):
+
         self.health -= sk.atk
-        sk.tonTai = False
+        sk.tonTai = sk.tonTai - 1
+
         if self.health <= 0:
             self.tonTai = False
 

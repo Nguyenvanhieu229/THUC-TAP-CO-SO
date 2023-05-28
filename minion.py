@@ -1,5 +1,6 @@
 import pygame.image
 
+import autoSkill
 import not_move_skill
 import skill
 import calculator
@@ -14,13 +15,13 @@ class Minion:
                      pygame.image.load(r"picture\minion\bluethang.png"),
                      pygame.image.load(r"picture\minion\bluetrai.png")]
         self.health = 100
-        self.range = 200
+        self.range = 100
         self.walkCount = 0
         self.skills = []
         self.health = 500
         self.x = x
         self.y = y
-        self.tonTai = True
+        self.tonTai = 1
         self.hitbox = (self.x, self.y, 30, 30)
         self.ben = ben
         self.vel = 2
@@ -53,17 +54,46 @@ class Minion:
 
         self.hitbox = (self.x, self.y, 20, 20)
 
-    def attack(self, end_x, end_y):
-        self.cho = 30
-        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
-                                                       5, end_x, end_y, 100, 1, 1))
-        if len(self.skills) > 1:
-            self.skills.pop(0)
+    def chonMucTieu(self, nhanVat, linhs, turret, tower):
+
+        for linh in linhs:
+            kc = calculator.khoangCach(self.x, self.y, linh.x, linh.y)
+            if kc < self.range:
+                return linh
+
+        kc = calculator.khoangCach(self.x, self.y, nhanVat.x, nhanVat.y)
+        if kc < self.range:
+            return nhanVat
+
+        kc = calculator.khoangCach(self.x, self.y, turret.x, turret.y)
+        if kc < self.range:
+            return turret
+
+        kc = calculator.khoangCach(self.x, self.y, tower.x, tower.y)
+        if kc < self.range:
+            return tower
+
+
+    def attack(self, nhanVat, minions, turret, tower ):
+
+        # xu ly thoi gian cho
+        self.cho = self.cho - 1 if self.cho >= 1 else 0
+
+        if self.cho > 0:
+            return
+
+        dich = self.chonMucTieu(nhanVat, minions, turret, tower)
+
+        # them moi doi tuong autoSkill vao mang skill cua linh
+        if dich:
+            self.cho = 45
+            self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
+
 
     def hitted(self, enemyskill):
 
         self.health -= enemyskill.atk
-        enemyskill.tonTai = False
+        enemyskill.tonTai = enemyskill.tonTai - 1
 
         if self.health <= 0:
-            self.tonTai = False
+            self.tonTai = 0

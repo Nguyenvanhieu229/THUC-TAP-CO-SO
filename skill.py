@@ -10,7 +10,7 @@ class Skill:
         self.start_y = start_y
         self.walkCount = 0
         self.vel = 6
-        self.tonTai = True
+        self.tonTai = 1
         self.hitbox = (start_x - 2,start_y - 2, 10, 10)
         self.soAnh = soAnh
         kc = calculator.khoangCach(start_x, start_y, end_x, end_y)
