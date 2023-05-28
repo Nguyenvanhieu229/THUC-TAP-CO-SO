@@ -320,16 +320,16 @@ class GamePlay:
 
         self.minionsPlayer = list(filter(lambda x: x.tonTai, self.minionsPlayer[:]))  # Loc cac doi tuong linh con song
         self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
-        self.ene.skills = list(filter(lambda x: x.tonTai, self.ene.skills[:]))
-        self.man.skills = list(filter(lambda x: x.tonTai, self.man.skills[:]))
-        self.redTurret.skills = list(filter(lambda x: x.tonTai, self.redTurret.skills[:]))
-        self.blueTurret.skills = list(filter(lambda x: x.tonTai, self.blueTurret.skills[:]))
+        self.ene.skills = list(filter(lambda x: x.tonTai > 0, self.ene.skills[:]))
+        self.man.skills = list(filter(lambda x: x.tonTai > 0, self.man.skills[:]))
+        self.redTurret.skills = list(filter(lambda x: x.tonTai > 0, self.redTurret.skills[:]))
+        self.blueTurret.skills = list(filter(lambda x: x.tonTai > 0, self.blueTurret.skills[:]))
 
         for blue in self.minionsPlayer:
-            blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
+            blue.skills = list(filter(lambda x: x.tonTai > 0, blue.skills[:]))
 
         for blue in self.minionsEnemy:
-            blue.skills = list(filter(lambda x: x.tonTai, blue.skills[:]))
+            blue.skills = list(filter(lambda x: x.tonTai > 0, blue.skills[:]))
 
 
 
