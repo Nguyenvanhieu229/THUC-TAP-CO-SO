@@ -89,7 +89,6 @@ class Minion:
             self.cho = 45
             self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
 
-
     def hitted(self, enemyskill):
 
         self.health -= enemyskill.atk
