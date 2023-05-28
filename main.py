@@ -142,7 +142,8 @@ class GamePlay:
         if self.man.health > 0:
             self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
 
-        self.ene.move(self.man, self.time[1], self.minionsPlayer, self.blueTurret, self.blueTower)
+        if self.ene.health > 0:
+            self.ene.move(self.man, self.time[1], self.minionsPlayer, self.blueTurret, self.blueTower)
 
         # linh di chuyen
         for minion in self.minionsPlayer:
@@ -150,6 +151,7 @@ class GamePlay:
 
         for minion in self.minionsEnemy:
             minion.move(self.man, self.minionsPlayer, self.blueTurret)
+
 
     def playerAttack(self):
         keys = pygame.key.get_pressed()
