@@ -15,6 +15,7 @@ class Player:
         self.health = 1000
         self.tancong = 500
         self.walkCount = 0
+
         self.health = 500
         self.thu = 20
         self.range = 200
