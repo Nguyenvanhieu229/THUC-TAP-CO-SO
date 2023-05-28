@@ -14,7 +14,6 @@ class Minion:
         self.img2 = [pygame.image.load(r"picture\minion\bluephai.png"),
                      pygame.image.load(r"picture\minion\bluethang.png"),
                      pygame.image.load(r"picture\minion\bluetrai.png")]
-        self.health = 100
         self.range = 100
         self.walkCount = 0
         self.skills = []
