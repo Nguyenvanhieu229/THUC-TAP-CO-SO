@@ -79,7 +79,9 @@ class GamePlay:
         #HIeu thu
         # ve nen
         self.win.blit(self.bg, (0, 0))
-
+        obj = self.checkMouse(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
+        if not obj and change:
+            self.win.blit(pygame.image.load(r"picture/foot.png"),(self.man.next_x,self.man.next_y))
         #ve thoi gian
         text = self.font.render("Time: " + str(self.time[0]) + ":" + str(self.time[1]), 1, (0, 0, 0))
         pygame.draw.rect(self.win, (0,255,255), (0,0,120,30))
