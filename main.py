@@ -1,12 +1,10 @@
 import pygame
-
 import calculator
-import skill as skill
+import skill
 import player
 import minion as mn
 import enemy
 import player
-import skill
 import tower
 import minion
 import tru
@@ -45,6 +43,7 @@ class GamePlay:
         self.blueTower = tower.Tower(pygame.image.load(r"picture/nhaXanh.png"), 10, 600)
         self.thoiGianHoiSinh = 90
         self.thoiGianHoiSinhQuai = 90
+        self.font = pygame.font.SysFont("comicsans", 20, True)
         self.run = True
         self.run2 = True
         self.count = 0
@@ -75,9 +74,14 @@ class GamePlay:
         return (self.run, self.change)
 
     def redrawWindow(self, change):
-        #HIeu thu
         # ve nen
         self.win.blit(self.bg, (0, 0))
+
+        #ve thoi gian
+        text = self.font.render("Time: " + str(self.time[0]) + ":" + str(self.time[1]), 1, (0, 0, 0))
+        pygame.draw.rect(self.win, (0,255,255), (0,0,120,30))
+        self.win.blit(text, (0, 0))
+
         # vẽ đạn từ trụ
         for sk in self.redTurret.skills:
             sk.draw(self.win)
@@ -128,9 +132,8 @@ class GamePlay:
         # nhan vat do nguoi choi va may di chuyen
         if self.man.health > 0:
             self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
-            self.ene.move(self.man, self.time[0] * 60 + self.time[1], self.minionsPlayer, self.blueTurret)
-        else:
-            self.ene.move(self.man, self.time[0] * 60 + self.time[1], self.minionsPlayer, self.blueTurret)
+
+        self.ene.move(self.man, self.time[1], self.minionsPlayer, self.blueTurret, self.blueTower)
 
         # linh di chuyen
         for minion in self.minionsPlayer:
@@ -166,6 +169,7 @@ class GamePlay:
         self.ene.Q = 0 if self.ene.Q <= 0 else self.ene.Q - 1
         self.ene.W = 0 if self.ene.W <= 0 else self.ene.W - 1
         self.ene.E = 0 if self.ene.E <= 0 else self.ene.E - 1
+        self.ene.A = 0 if self.ene.A <= 0 else self.ene.A - 1
 
         kc = calculator.khoangCach(self.ene.x, self.ene.y, self.man.x, self.man.y)
 
@@ -176,10 +180,7 @@ class GamePlay:
         elif kc < 100 and self.ene.Q == 0:
             self.ene.attack(self.win, "Q", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
         elif self.ene.A == 0:
-            (x, y) = calculator.find(self.man, self.blueTurret if calculator.khoangCach(self.man.x, self.man.y, self.blueTurret.x, self.blueTurret.y)
-            < calculator.khoangCach(self.ene.x, self.ene.y, self.blueTower.x, self.blueTower.y) else self.blueTower, self.minionsPlayer)
-            if calculator.khoangCach(self.ene.x, self.ene.y, x, y) < self.ene.range:
-                self.ene.danhThuong(x, y)
+            self.ene.danhThuong(self.man, self.minionsPlayer, self.blueTurret, self.blueTower)
 
     def playEvent(self):
 
@@ -193,6 +194,12 @@ class GamePlay:
             if self.thoiGianHoiSinh == 0:
                 self.man = player.Player()
                 self.thoiGianHoiSinh = 90
+
+        if self.ene.health <= 0 :
+            self.thoiGianHoiSinhQuai= self.thoiGianHoiSinhQuai - 1
+            if self.thoiGianHoiSinhQuai == 0:
+                self.ene = enemy.Enemy()
+                self.thoiGianHoiSinhQuai = 90
 
         # thuc hien cac viec di chuyen
         self.playMove()

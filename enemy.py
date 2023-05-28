@@ -1,4 +1,6 @@
 import pygame
+
+import autoSkill
 import calculator
 import math
 import random
@@ -52,14 +54,15 @@ class Enemy:
         self.hitbox = (self.x, self.y, 50, 50)
         self.tonTai = True
 
-    def move(self, man, reset, minionPlayer, blueTurret):
+    def move(self, man, reset, minionPlayer, blueTurret, blueTower):
 
-        minx, miny = calculator.find(self, man, minionPlayer, blueTurret)
-        kcDich = calculator.khoangCach(self.x, self.y, minx, miny)
+        dich = self.chonMucTieuDi(man, minionPlayer, blueTurret, blueTower)
 
-        if reset % 2 == 0:
-            self.next_x =  random.randint(int(minx - 30), int(minx + 30))
-            self.next_y =  random.randint(int(miny - 30), int(miny + 30))
+        kcDich = calculator.khoangCach(self.x, self.y, dich.x, dich.y)
+
+        if reset % 2 == 0 and dich:
+            self.next_x =  random.randint(int(dich.x - 30), int(dich.x + 30))
+            self.next_y =  random.randint(int(dich.y - 30), int(dich.y + 30))
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
 
         if kcDich > self.range:
@@ -69,6 +72,11 @@ class Enemy:
         self.hitbox = (self.x, self.y, 20, 20)
 
     def draw(self, win):
+
+        if self.health <= 0:
+            win.blit(self.hinhanhTrai[1],(self.x, self.y))
+            return
+
         if self.walkCount + 1 >= 33:
             self.walkCount = 0
         if self.x >= self.next_x:
@@ -108,12 +116,54 @@ class Enemy:
         self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 30, end_x, end_y, end_x, end_y, 300, 1))
         self.E = 200
 
-    def danhThuong(self, end_x, end_y):
-        self.A = 50
-        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
-                                                       5, end_x, end_y, 100, 1, 1))
+    def chonMucTieu(self, nhanVat, linhs, turret, tower):
+
+        for linh in linhs:
+            kc = calculator.khoangCach(self.x, self.y, linh.x, linh.y)
+            if kc < self.range:
+                return linh
+
+        kc = calculator.khoangCach(self.x, self.y, nhanVat.x, nhanVat.y)
+        if kc < self.range:
+            return nhanVat
+
+        kc = calculator.khoangCach(self.x, self.y, turret.x, turret.y)
+        if kc < self.range:
+            return turret
+
+        kc = calculator.khoangCach(self.x, self.y, tower.x, tower.y)
+        if kc < self.range:
+            return tower
+
+    def chonMucTieuDi(self, nhanVat, linhs, turret, tower):
+
+        if nhanVat.health > 0:
+            return nhanVat
+
+        for linh in linhs:
+            return linh
+
+        if turret.health > 0:
+            return turret
+
+        if tower.health > 0:
+            return tower
+
+    def danhThuong(self, nhanVat, minions, turret, tower):
+
+        dich = self.chonMucTieu(nhanVat, minions, turret, tower)
+
+        # them moi doi tuong autoSkill vao mang skill cua linh
+        if dich:
+            self.A = 45
+            self.skills.append(
+                autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
+
+        if self.health <= 0:
+            return
+
         if skill == "Q":
             self.skill1(win, start_x, start_y, end_x, end_y)
         elif skill == "W":

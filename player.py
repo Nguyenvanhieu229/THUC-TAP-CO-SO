@@ -80,6 +80,7 @@ class Player:
         self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/main character/skills/skill3a.png")], 100, end_x, end_y, 100, 1, 30))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
+
         if skill == "Q":
             self.skill1(win, start_x, start_y, end_x, end_y)
         elif skill == "W":
