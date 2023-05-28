@@ -25,7 +25,7 @@ class Tower:
         #nha chi bi tan cong boi don danh thuong
         if enemySkill.vel == 8:
             self.health -= enemySkill.atk
-            enemySkill.tonTai  = enemySkill - 1
+            enemySkill.tonTai  = enemySkill.tonTai - 1
 
             #am thanh
             if self.mau <= 0:

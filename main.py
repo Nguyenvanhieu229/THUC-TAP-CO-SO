@@ -1,4 +1,5 @@
 import pygame
+
 import calculator
 import skill
 import player
@@ -61,6 +62,7 @@ class GamePlay:
             if event.type == pygame.QUIT:
                 self.run = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                pygame.mouse.set_cursor(*pygame.cursors.broken_x)
                 self.change = True
 
         if self.redTower.tonTai == False:
@@ -74,6 +76,7 @@ class GamePlay:
         return (self.run, self.change)
 
     def redrawWindow(self, change):
+        #HIeu thu
         # ve nen
         self.win.blit(self.bg, (0, 0))
 
@@ -159,10 +162,9 @@ class GamePlay:
         elif keys[pygame.K_q] and self.man.Q == 0:
             self.man.attack(self.win, "Q", self.man.x, self.man.y, pygame.mouse.get_pos()[0] + 10, pygame.mouse.get_pos()[1] + 10)
         elif keys[pygame.K_a] and self.man.A == 0:
-            (x, y) = calculator.find(self.man, self.redTurret if calculator.khoangCach(self.man.x, self.man.y, self.redTurret.x, self.redTurret.y)
-                < calculator.khoangCach(self.man.x, self.man.y, self.redTower.x, self.redTower.y) else self.redTower, self.minionsEnemy)
-            if calculator.khoangCach(self.man.x, self.man.y, x, y) < self.man.range:
-                self.man.danhThuong(x, y)
+            target = self.checkMouse(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
+            if target and calculator.khoangCach(self.man.x,self.man.y,target.x,target.y) <= self.man.range:
+                self.man.danhThuong(target)
 
     def enemyAttack(self):
 
@@ -183,7 +185,10 @@ class GamePlay:
             self.ene.danhThuong(self.man, self.minionsPlayer, self.blueTurret, self.blueTower)
 
     def playEvent(self):
-
+        if self.checkMouse(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+            pygame.mouse.set_cursor(pygame.cursors.broken_x)
+        else:
+            pygame.mouse.set_cursor(pygame.cursors.arrow)
         # sinh linh
         if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mn.Minion(False, 1239, 153))
@@ -200,6 +205,7 @@ class GamePlay:
             if self.thoiGianHoiSinhQuai == 0:
                 self.ene = enemy.Enemy()
                 self.thoiGianHoiSinhQuai = 90
+
 
         # thuc hien cac viec di chuyen
         self.playMove()
@@ -362,4 +368,22 @@ class GamePlay:
             self.time[2] += 1
 
         pygame.quit()
+
+    def checkMouse(self,x1,y1):
+        for minion in self.minionsEnemy:
+            if minion.x < x1 and x1 < minion.x + 50 and minion.y < y1 and y1 < minion.y+ 50:
+                return minion
+
+        if self.redTurret.x < x1 and x1 < self.redTurret.x + 50 and self.redTurret.y < y1 and y1 < self.redTurret.y + 100:
+                return self.redTurret
+
+        if self.redTower.x < x1 and x1 < self.redTower.x + 50 and self.redTower.y < y1 and y1 < self.redTower.y + 100:
+                return self.redTower
+
+        if self.ene.x < x1 and x1 < self.ene.x + 50 and self.ene.y < y1 and y1 < self.ene.y + 50:
+                return  self.ene
+
+
+
+
 

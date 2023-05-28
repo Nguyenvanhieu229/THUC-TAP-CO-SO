@@ -58,10 +58,10 @@ class Player:
         pygame.draw.rect(win, (0, 128, 0),
                          (self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
 
-    def danhThuong(self, end_x, end_y):
+    def danhThuong(self,target):
         self.A = 50
-        self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")],
-                                                       5, end_x, end_y, 100, 1, 1))
+        self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill2-removebg-preview.png")],self.tancong,self.x,self.y
+                                                    , target, 100, 1))
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
