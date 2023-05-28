@@ -122,9 +122,9 @@ class GamePlay:
         # nhan vat do nguoi choi va may di chuyen
         if self.man.health > 0:
             self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
-            self.ene.move(self.man, self.time[0] * 60 + self.time[1])
-
-
+            self.ene.move(self.man, self.time[0] * 60 + self.time[1], self.minionsPlayer, self.blueTurret)
+        else:
+            self.ene.move(self.man, self.time[0] * 60 + self.time[1], self.minionsPlayer, self.blueTurret)
 
         # linh di chuyen
         for minion in self.minionsPlayer:

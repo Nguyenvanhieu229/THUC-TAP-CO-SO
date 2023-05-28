@@ -52,17 +52,21 @@ class Enemy:
         self.hitbox = (self.x, self.y, 50, 50)
         self.tonTai = True
 
-    def move(self, man, reset):
+    def move(self, man, reset, minionPlayer, blueTurret):
+
+        minx, miny = calculator.find(self, man, minionPlayer, blueTurret)
+        kcDich = calculator.khoangCach(self.x, self.y, minx, miny)
+
         if reset % 2 == 0:
-            self.next_x, self.next_y = random.randint(man.x - 20, man.x+20), random.randint(man.y-20, man.y+20)
-
-        # minx, miny = tinhToan.find(self, man, minionPlayer)
+            self.next_x =  random.randint(int(minx - 30), int(minx + 30))
+            self.next_y =  random.randint(int(miny - 30), int(miny + 30))
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
-        if kc > self.range:
-            self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
-            self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
 
-        self.hitbox = (self.x, self.y, 50, 50)
+        if kcDich > self.range:
+            self.x = ((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.x
+            self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
+
+        self.hitbox = (self.x, self.y, 20, 20)
 
     def draw(self, win):
         if self.walkCount + 1 >= 33:
