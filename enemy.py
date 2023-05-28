@@ -67,6 +67,7 @@ class Enemy:
             self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
 
         self.hitbox = (self.x, self.y, 20, 20)
+        #aa
 
     def draw(self, win):
         if self.walkCount + 1 >= 33:
