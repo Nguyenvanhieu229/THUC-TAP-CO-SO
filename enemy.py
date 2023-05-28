@@ -67,7 +67,6 @@ class Enemy:
             self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
 
         self.hitbox = (self.x, self.y, 20, 20)
-        #aa
 
     def draw(self, win):
         if self.walkCount + 1 >= 33:
@@ -78,7 +77,7 @@ class Enemy:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
-        pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0] + 10, self.hitbox[1] - 10, 50, 10))
+        pygame.draw.rect(win, (254, 0, 0), (self.hitbox[0] + 10, self.hitbox[1] - 10, 50, 10))
         pygame.draw.rect(win, (0, 128, 0),
                          (self.hitbox[0] + 10, self.hitbox[1] - 10, 50 - (0.1 * (500 - self.health)), 10))
 
