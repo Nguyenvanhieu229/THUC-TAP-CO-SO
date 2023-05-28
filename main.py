@@ -62,7 +62,6 @@ class GamePlay:
             if event.type == pygame.QUIT:
                 self.run = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-                pygame.mouse.set_cursor(*pygame.cursors.broken_x)
                 self.change = True
 
         if self.redTower.tonTai == False:
