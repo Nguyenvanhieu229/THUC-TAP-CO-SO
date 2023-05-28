@@ -185,9 +185,9 @@ class GamePlay:
 
     def playEvent(self):
         if self.checkMouse(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
-            pygame.mouse.set_cursor(pygame.cursors.broken_x)
+            pygame.mouse.set_cursor(*pygame.cursors.broken_x)
         else:
-            pygame.mouse.set_cursor(pygame.cursors.arrow)
+            pygame.mouse.set_cursor(*pygame.cursors.arrow)
         # sinh linh
         if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mn.Minion(False, 1239, 153))
