@@ -28,6 +28,6 @@ class Tower:
             enemySkill.tonTai  = enemySkill.tonTai - 1
 
             #am thanh
-            if self.health <= 0:
+        if self.health <= 0:
                 self.tonTai = False
                 #game ket thuc

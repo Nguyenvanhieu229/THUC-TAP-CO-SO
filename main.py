@@ -42,8 +42,9 @@ class GamePlay:
         self.reset = 0
         self.redTower = tower.Tower(pygame.image.load(r"picture/nhaDo.png"), 1190, 0)
         self.blueTower = tower.Tower(pygame.image.load(r"picture/nhaXanh.png"), 10, 600)
-        self.thoiGianHoiSinh = 90
-        self.thoiGianHoiSinhQuai = 90
+        self.thoiGianHoiSinh = 300
+        self.thoiGianHoiSinhQuai = 300
+        self.kda = [0,0,0]
         self.font = pygame.font.SysFont("comicsans", 20, True)
         self.run = True
         self.run2 = True
@@ -85,6 +86,10 @@ class GamePlay:
         pygame.draw.rect(self.win, (0,255,255), (0,0,120,30))
         self.win.blit(text, (0, 0))
 
+        #ve kda
+        text = self.font.render("K: " + str(self.kda[0]) + "; D: " + str(self.kda[1]) + "; E: " + str(self.kda[2]), 1, (0, 0, 0))
+        pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 200, 30))
+        self.win.blit(text, (600,0))
         # vẽ đạn từ trụ
         for sk in self.redTurret.skills:
             sk.draw(self.win)
@@ -194,17 +199,27 @@ class GamePlay:
             self.minionsEnemy.append(mn.Minion(False, 1239, 153))
             self.minionsPlayer.append((mn.Minion(True, 152, 623)))
 
-        if self.man.health <= 0 :
+        if self.man.health <= 0:
+
+            if self.thoiGianHoiSinh == 300:
+                self.kda[1] = self.kda[1] + 1
+
             self.thoiGianHoiSinh= self.thoiGianHoiSinh - 1
+
             if self.thoiGianHoiSinh == 0:
                 self.man = player.Player()
-                self.thoiGianHoiSinh = 90
+                self.thoiGianHoiSinh = 300
 
-        if self.ene.health <= 0 :
+        if self.ene.health <= 0:
+
+            if self.thoiGianHoiSinhQuai == 300:
+                self.kda[0] = self.kda[0] + 1
+
             self.thoiGianHoiSinhQuai= self.thoiGianHoiSinhQuai - 1
             if self.thoiGianHoiSinhQuai == 0:
+
                 self.ene = enemy.Enemy()
-                self.thoiGianHoiSinhQuai = 90
+                self.thoiGianHoiSinhQuai = 300
 
 
         # thuc hien cac viec di chuyen

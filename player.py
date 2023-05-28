@@ -13,7 +13,7 @@ class Player:
         self.next_x = 100
         self.next_y = 700
         self.health = 1000
-        self.tancong = 50
+        self.tancong = 500
         self.walkCount = 0
         self.health = 500
         self.thu = 20

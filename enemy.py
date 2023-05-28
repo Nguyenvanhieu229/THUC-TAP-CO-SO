@@ -157,7 +157,7 @@ class Enemy:
         if dich:
             self.A = 45
             self.skills.append(
-                autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
+                autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 50, self.x, self.y, dich, 200, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
 
