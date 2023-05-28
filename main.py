@@ -54,6 +54,7 @@ class GamePlay:
         self.skills = []
         self.time = [0, 0, 0]
         self.tickcount = 0
+        self.font1 = pygame.font.SysFont("comicsans", 50, True)
 
     def settings(self):
         self.run = True
@@ -64,12 +65,22 @@ class GamePlay:
                 self.run = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 self.change = True
-
         if self.redTower.tonTai == False:
-            self.run = False
+            text1 = self.font1.render("VICTORY", 1, (0, 0, 0))
+            self.win.blit(text1, (500, 300))
+            event1 = pygame.event.get()
+            for event in event1:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.run = False
+
             #nguoi choi cvasfafadfed.
         elif self.blueTower.tonTai == False:
-            self.run = False
+            text1 = self.font1.render("VICTORY", 1, (0, 0, 0))
+            self.win.blit(text1, (500, 300))
+            event1 = pygame.event.get()
+            for event in event1:
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    self.run = False
             #nguoi choi thua
 
 
@@ -126,6 +137,9 @@ class GamePlay:
         self.man.draw(self.win)
         self.ene.draw(self.win)
 
+        if self.man.health <= 0 :
+            text1 = self.font1.render("Revive in " + str(int(self.thoiGianHoiSinh/30)) + " seconds", 1, (0, 0, 0))
+            self.win.blit(text1,(500,300))
         pygame.display.update()
 
     def turretAttack(self):
