@@ -156,7 +156,8 @@ class GamePlay:
         if self.man.health > 0:
             self.man.move(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1], self.change)
 
-        self.ene.move(self.man, self.time[1], self.minionsPlayer, self.blueTurret, self.blueTower)
+        if self.ene.health > 0:
+            self.ene.move(self.man, self.time[1], self.minionsPlayer, self.blueTurret, self.blueTower)
 
         # linh di chuyen
         for minion in self.minionsPlayer:
@@ -164,6 +165,7 @@ class GamePlay:
 
         for minion in self.minionsEnemy:
             minion.move(self.man, self.minionsPlayer, self.blueTurret)
+
 
     def playerAttack(self):
         keys = pygame.key.get_pressed()
@@ -332,11 +334,11 @@ class GamePlay:
         # nha bi danh boi nhan vat
         for sk in self.man.skills:
             if ktraHitBox(self.redTower, sk):
-                self.redTower.hitted(sk)
+                self.redTower.hitted(sk, self.redTurret)
 
         for sk in self.ene.skills:
             if ktraHitBox(self.blueTower, sk):
-                self.blueTower.hitted(sk)
+                self.blueTower.hitted(sk, self.blueTurret)
 
         # nha bi danh boi linh
         for blue in self.minionsPlayer:
@@ -407,7 +409,7 @@ class GamePlay:
         if self.redTurret.x < x1 and x1 < self.redTurret.x + 50 and self.redTurret.y < y1 and y1 < self.redTurret.y + 100:
                 return self.redTurret
 
-        if self.redTower.x < x1 and x1 < self.redTower.x + 50 and self.redTower.y < y1 and y1 < self.redTower.y + 100:
+        if self.redTower.x < x1 and x1 < self.redTower.x + 50 and self.redTower.y < y1 and y1 < self.redTower.y + 100 and self.redTurret.health <= 0:
                 return self.redTower
 
         if self.ene.x < x1 and x1 < self.ene.x + 50 and self.ene.y < y1 and y1 < self.ene.y + 50:

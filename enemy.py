@@ -132,7 +132,7 @@ class Enemy:
             return turret
 
         kc = calculator.khoangCach(self.x, self.y, tower.x, tower.y)
-        if kc < self.range:
+        if kc < self.range and turret.health <= 0:
             return tower
 
     def chonMucTieuDi(self, nhanVat, linhs, turret, tower):

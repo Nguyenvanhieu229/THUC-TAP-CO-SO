@@ -20,12 +20,13 @@ class Tower:
                              (self.hitbox[0] + 65, self.hitbox[1], 50 - (0.05 * (1000 - self.health)), 10))
             pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 65, self.hitbox[1], 50, 10), width=2)
 
-    def hitted(self, enemySkill):
+    def hitted(self, enemySkill, turret):
 
         #nha chi bi tan cong boi don danh thuong
         if enemySkill.vel == 8:
-            self.health -= enemySkill.atk
-            enemySkill.tonTai  = enemySkill.tonTai - 1
+            if turret.health <= 0:
+                self.health -= enemySkill.atk
+            enemySkill.tonTai = enemySkill.tonTai - 1
 
             #am thanh
         if self.health <= 0:

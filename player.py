@@ -15,6 +15,7 @@ class Player:
         self.health = 1000
         self.tancong = 500
         self.walkCount = 0
+
         self.health = 500
         self.thu = 20
         self.range = 200
@@ -65,10 +66,10 @@ class Player:
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1a.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1a.png")], 30, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2a.png")], 20, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2a.png")], 50, start_x, start_y, end_x, end_y, 200, 1))
         self.W = 150
 
     def ultimate(self, end_x, end_y):
