@@ -65,13 +65,12 @@ class Minion:
             return nhanVat
 
         kc = calculator.khoangCach(self.x, self.y, turret.x, turret.y)
-        if kc < self.range:
+        if kc < self.range and turret.health > 0:
             return turret
 
         kc = calculator.khoangCach(self.x, self.y, tower.x, tower.y)
-        if kc < self.range:
+        if kc < self.range and tower.health > 0:
             return tower
-
 
     def attack(self, nhanVat, minions, turret, tower ):
 

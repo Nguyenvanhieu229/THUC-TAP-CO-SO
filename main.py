@@ -10,7 +10,6 @@ import tower
 import minion
 import tru
 
-pygame.init()
 
 def ktraHitBox(a, b):
 
@@ -31,6 +30,7 @@ def ktraHitBox(a, b):
 class GamePlay:
 
     def __init__(self):
+        pygame.init()
         self.win = pygame.display.set_mode((1366, 768))
         self.bg = pygame.image.load(r"picture/bacg.png")
         self.clock = pygame.time.Clock()
@@ -45,7 +45,7 @@ class GamePlay:
         self.thoiGianHoiSinh = 300
         self.thoiGianHoiSinhQuai = 300
         self.kda = [0,0,0]
-        self.font = pygame.font.SysFont("comicsans", 20, True)
+        self.font2 = pygame.font.SysFont("comicsans", 20, True)
         self.run = True
         self.run2 = True
         self.count = 0
@@ -66,23 +66,16 @@ class GamePlay:
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
                 self.change = True
         if self.redTower.tonTai == False:
-            text1 = self.font1.render("VICTORY", 1, (0, 0, 0))
-            self.win.blit(text1, (500, 300))
-            event1 = pygame.event.get()
-            for event in event1:
+            for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.run = False
 
             #nguoi choi cvasfafadfed.
         elif self.blueTower.tonTai == False:
-            text1 = self.font1.render("VICTORY", 1, (0, 0, 0))
-            self.win.blit(text1, (500, 300))
-            event1 = pygame.event.get()
-            for event in event1:
+            for event in events:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     self.run = False
             #nguoi choi thua
-
 
         return (self.run, self.change)
 
@@ -94,12 +87,12 @@ class GamePlay:
         if not obj and change:
             self.win.blit(pygame.image.load(r"picture/foot.png"),(self.man.next_x,self.man.next_y))
         #ve thoi gian
-        text = self.font.render("Time: " + str(self.time[0]) + ":" + str(self.time[1]), 1, (0, 0, 0))
+        text = self.font2.render("Time: " + str(self.time[0]) + ":" + str(self.time[1]), 1, (0, 0, 0))
         pygame.draw.rect(self.win, (0,255,255), (0,0,120,30))
         self.win.blit(text, (0, 0))
 
         #ve kda
-        text = self.font.render("K: " + str(self.kda[0]) + "; D: " + str(self.kda[1]) + "; E: " + str(self.kda[2]), 1, (0, 0, 0))
+        text = self.font2.render("K: " + str(self.kda[0]) + " D: " + str(self.kda[1]) + " E: " + str(self.kda[2]), 1, (0, 0, 0))
         pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 200, 30))
         self.win.blit(text, (600,0))
         # vẽ đạn từ trụ
@@ -140,6 +133,18 @@ class GamePlay:
         if self.man.health <= 0 :
             text1 = self.font1.render("Revive in " + str(int(self.thoiGianHoiSinh/30)) + " seconds", 1, (0, 0, 0))
             self.win.blit(text1,(500,300))
+
+        if self.redTower.health <= 0:
+            text1 = self.font1.render("VICTORY", 1, (0, 0, 0))
+            self.win.blit(text1, (500, 300))
+            text2 = self.font2.render("REMATCH",1,(0,0,0))
+            self.win.blit(text2,(550,400))
+
+        elif self.blueTower.health <= 0:
+            text1 = self.font1.render("DEFEATED", 1, (0, 0, 0))
+            self.win.blit(text1, (500, 300))
+            text2 = self.font2.render("REMATCH", 1, (0, 0, 0))
+            self.win.blit(text2, (550, 400))
         pygame.display.update()
 
     def turretAttack(self):

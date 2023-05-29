@@ -54,7 +54,7 @@ class Turret:
 
         dich = self.chonMucTieu(ene, minions)
 
-        if dich and self.cho == 0:
+        if dich and self.cho == 0 and self.health > 0:
             self.cho = 45
             self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")], 100,
                                self.x + 20, self.y + 20, dich, 200, 1))
