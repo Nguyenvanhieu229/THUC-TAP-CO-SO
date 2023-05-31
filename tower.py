@@ -5,7 +5,7 @@ import skill
 
 class Tower:
     def __init__(self, img, x, y):
-        self.health = 1000
+        self.health = 500
         self.range = 300
         self.img = img
         self.x = x
@@ -18,7 +18,7 @@ class Tower:
             color = (255, 0, 0) if self.x == 1190 and self.y == 0 else (126, 248, 5)
             win.blit(self.img, (self.x, self.y))
             pygame.draw.rect(win, color,
-                             (self.hitbox[0] + 55, self.hitbox[1] + 10, 50 - (0.05 * (1000 - self.health)), 10))
+                             (self.hitbox[0] + 55, self.hitbox[1] + 10, 50 - (0.1 * (500 - self.health)), 10))
             pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 55, self.hitbox[1] + 10, 50, 10), width=2)
 
     def hitted(self, enemySkill, turret):

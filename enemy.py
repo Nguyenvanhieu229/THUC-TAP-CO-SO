@@ -14,7 +14,7 @@ class Enemy:
         self.next_x = 0
         self.next_y = 0
         self.health = 500
-        self.tancong = 50
+        self.tancong = 100
         self.walkCount = 0
         self.thu = 20
         self.skills = []
@@ -109,11 +109,11 @@ class Enemy:
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill1.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill1.png")], 80, start_x, start_y, end_x, end_y, 200, 1))
 
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill2.png")], 30, start_x, start_y, end_x,
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill2.png")], 100, start_x, start_y, end_x,
                         end_y, 200, 1))
         self.W = 150
 
@@ -166,7 +166,7 @@ class Enemy:
                 return
             self.A = 45
             self.skills.append(
-                autoSkill.AutoSkill([pygame.image.load(r"picture/enemy/danhthuong.png")], 20, self.x, self.y, dich, 200, 1))
+                autoSkill.AutoSkill([pygame.image.load(r"picture/enemy/danhthuong .png")], self.tancong, self.x, self.y, dich, 200, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
 

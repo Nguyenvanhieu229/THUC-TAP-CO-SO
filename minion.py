@@ -14,7 +14,7 @@ class Minion:
         self.img2 = [pygame.image.load(r"picture\minion\bluephai.png"),
                      pygame.image.load(r"picture\minion\bluethang.png"),
                      pygame.image.load(r"picture\minion\bluetrai.png")]
-        self.range = 100
+        self.range = 50
         self.walkCount = 0
         self.skills = []
         self.health = 500
@@ -93,7 +93,7 @@ class Minion:
             if dich.health <= 0:
                 return
             self.cho = 45
-            self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
+            self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/hong.png") if self.ben else pygame.image.load(r"picture/nau.png")], 30, self.x, self.y, dich, 200, 1))
 
     def hitted(self, enemyskill):
         if self.health > 0 and enemyskill.tonTai > 0:

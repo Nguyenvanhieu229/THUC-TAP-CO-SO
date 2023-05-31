@@ -9,6 +9,7 @@ import player
 import tower
 import minion
 import tru
+import os
 
 
 def ktraHitBox(a, b):
@@ -101,7 +102,7 @@ class GamePlay:
 
         #ve kda
         text = self.font2.render("K: " + str(self.kda[0]) + "   D: " + str(self.kda[1]) + "   EXP: " + str(self.man.exp) + "/" + str(self.man.maxExp), 1, (0, 0, 0))
-        pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 200, 30))
+        pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 300, 30))
         self.win.blit(text, (600,0))
         # vẽ đạn từ trụ
         for sk in self.redTurret.skills:
@@ -139,7 +140,7 @@ class GamePlay:
         self.man.draw(self.win)
         self.ene.draw(self.win)
 
-        if self.man.health <= 0 :
+        if self.man.health <= 0 and self.redTower.health > 0 and self.blueTower.health > 0:
             text1 = self.font1.render("Revive in " + str(int(self.thoiGianHoiSinh/30)) + " seconds", 1, (0, 0, 0))
             self.win.blit(text1,(500,300))
 
@@ -231,7 +232,7 @@ class GamePlay:
         else:
             pygame.mouse.set_cursor(*pygame.cursors.arrow)
         # sinh linh
-        if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
+        if (self.time[0] * 60 + self.time[1]) % 20 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mn.Minion(False, 1239, 153))
             self.minionsPlayer.append((mn.Minion(True, 152, 623)))
 
@@ -243,6 +244,10 @@ class GamePlay:
             self.thoiGianHoiSinh= self.thoiGianHoiSinh - 1
 
             if self.thoiGianHoiSinh == 0:
+                self.man.next_x = 100
+                self.man.next_y = 700
+                self.man.x = 100
+                self.man.y = 700
                 self.man.health = 1000
                 self.man.skills = []
                 self.thoiGianHoiSinh = 300
@@ -253,6 +258,10 @@ class GamePlay:
 
             self.thoiGianHoiSinhQuai= self.thoiGianHoiSinhQuai - 1
             if self.thoiGianHoiSinhQuai == 0:
+                self.ene.next_x = 1300
+                self.ene.next_y = 100
+                self.ene.x = 1300
+                self.ene.y = 100
                 self.ene.health = 500
                 self.ene.skills = []
                 self.thoiGianHoiSinhQuai = 300

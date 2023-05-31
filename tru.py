@@ -7,7 +7,7 @@ import autoSkill
 
 class Turret:
     def __init__(self, img, x, y):
-        self.health = 1000
+        self.health = 500
         self.img = img
         self.atk = 50
         self.skills = []
@@ -33,7 +33,7 @@ class Turret:
                 color = (255, 0, 0) if self.x == 1008 and self.y == 125 else (126, 248, 5)
                 win.blit(self.img, (self.x, self.y))
                 pygame.draw.rect(win, color,
-                                 (self.hitbox[0] + 15, self.hitbox[1] - 22, 50 - (0.05 * (1000 - self.health)), 10))
+                                 (self.hitbox[0] + 15, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
                 pygame.draw.rect(win, color="blue", rect = (self.hitbox[0] + 15, self.hitbox[1] - 22, 50, 10), width = 2)
 
     def chonMucTieu(self, ene, minions):
@@ -53,11 +53,12 @@ class Turret:
             return
         self.cho = 0 if self.cho <= 0 else self.cho - 1
         self.status = False
-
         dich = self.chonMucTieu(ene, minions)
         if dich and self.cho == 0:
                 self.cho = 45
-                self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill1.JPG-removebg-preview.png")], 100,
+                self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/xanh.png")
+                                                        if self.x == 330 else
+                                                        pygame.image.load(r"picture/tim.png")], 100,
                                    self.x + 20, self.y + 20, dich, 200, 1))
 
     def hitted(self, enemySkill):
