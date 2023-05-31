@@ -122,7 +122,7 @@ class Enemy:
         self.E = 240
         self.skills.append(
             not_move_skill.NotMoveSkill([pygame.image.load(r"picture/enemy/utilmate.png")], 10, end_x,
-                                        end_y, 100, 1, 30))
+                                        end_y, 100, 1, 120))
 
     def chonMucTieu(self, nhanVat, linhs, turret, tower):
 

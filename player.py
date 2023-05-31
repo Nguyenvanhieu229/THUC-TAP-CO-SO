@@ -16,7 +16,7 @@ class Player:
         self.tancong = 500
         self.walkCount = 0
 
-        self.health = 500
+        self.health = 1000
         self.thu = 20
         self.range = 200
         self.skills = []
@@ -60,7 +60,7 @@ class Player:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
         pygame.draw.rect(win, (126, 248, 5),
-                         (self.hitbox[0] - 10, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+                         (self.hitbox[0] - 10, self.hitbox[1] - 22, 50 - (0.05 * (1000 - self.health)), 10))
         pygame.draw.rect(win, color="blue", rect=(self.hitbox[0]-10, self.hitbox[1] - 22, 50, 10), width=2)
         font3 = pygame.font.SysFont("comicsans", 20, True)
         text = font3.render(str(self.lv), 1, (0, 0, 0))

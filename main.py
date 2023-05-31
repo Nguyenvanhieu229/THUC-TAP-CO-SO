@@ -243,7 +243,8 @@ class GamePlay:
             self.thoiGianHoiSinh= self.thoiGianHoiSinh - 1
 
             if self.thoiGianHoiSinh == 0:
-                self.man = player.Player()
+                self.man.health = 1000
+                self.man.skills = []
                 self.thoiGianHoiSinh = 300
 
         if self.ene.health <= 0:
@@ -252,8 +253,8 @@ class GamePlay:
 
             self.thoiGianHoiSinhQuai= self.thoiGianHoiSinhQuai - 1
             if self.thoiGianHoiSinhQuai == 0:
-
-                self.ene = enemy.Enemy()
+                self.ene.health = 500
+                self.ene.skills = []
                 self.thoiGianHoiSinhQuai = 300
 
         # upgrade player
