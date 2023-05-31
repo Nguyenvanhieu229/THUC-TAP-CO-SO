@@ -55,7 +55,8 @@ class Enemy:
         self.tonTai = True
         self.dead = pygame.image.load(r"picture/deadPic.png")
         self.lv = 1
-        self.exp = 100 + self.lv*150
+        self.maxExp = 100
+        self.exp = 0
 
     def move(self, man, reset, minionPlayer, blueTurret, blueTower):
 

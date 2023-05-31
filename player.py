@@ -35,7 +35,8 @@ class Player:
         self.tonTai = True
         self.dead = pygame.image.load(r"picture/deadPic.png")
         self.lv = 1
-        self.exp = 100 + self.lv*150
+        self.maxExp = 100
+        self.exp = 0
 
     def move(self, next_x, next_y, change):
         if change:
@@ -59,7 +60,7 @@ class Player:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
         pygame.draw.rect(win, (126, 248, 5),
-                         (self.hitbox[0] -10, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+                         (self.hitbox[0] - 10, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
         pygame.draw.rect(win, color="blue", rect=(self.hitbox[0]-10, self.hitbox[1] - 22, 50, 10), width=2)
         font3 = pygame.font.SysFont("comicsans", 20, True)
         text = font3.render(str(self.lv), 1, (0, 0, 0))

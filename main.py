@@ -60,8 +60,8 @@ class GamePlay:
         self.v1 = pygame.image.load(r"picture/v1.png")
         self.v2 = pygame.image.load(r"picture/v2.png")
         self.vs = pygame.image.load(r"picture/vs.png")
-        self.lvup = pygame.font.SysFont("comicsans",15,True)
-        self.timeExist = 60
+        self.deadAllyMini = 0
+        self.deadEneMini=0
 
 
     def settings(self):
@@ -72,7 +72,6 @@ class GamePlay:
             if event.type == pygame.QUIT:
                 self.run = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
-                print(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
                 self.change = True
         if self.redTower.tonTai == False:
             for event in events:
@@ -101,7 +100,7 @@ class GamePlay:
         self.win.blit(text, (0, 0))
 
         #ve kda
-        text = self.font2.render("K: " + str(self.kda[0]) + "   D: " + str(self.kda[1]) + "   EXP: " + str(self.kda[2]), 1, (0, 0, 0))
+        text = self.font2.render("K: " + str(self.kda[0]) + "   D: " + str(self.kda[1]) + "   EXP: " + str(self.man.exp) + "/" + str(self.man.maxExp), 1, (0, 0, 0))
         pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 200, 30))
         self.win.blit(text, (600,0))
         # vẽ đạn từ trụ
@@ -127,19 +126,12 @@ class GamePlay:
         # ve linh hai ben
         for minion in self.minionsPlayer:
             minion.draw(self.win)
-            if minion.health <= 0 :
-                text = self.lvup.render("+20 exp", 1, (0, 0, 0))
-                self.win.blit(text, (minion.x, minion.y - 20))
-
             for sk in minion.skills:
                 sk.draw(self.win)
 
+
         for minion in self.minionsEnemy:
             minion.draw(self.win)
-            if minion.health <= 0:
-                text = self.lvup.render("+20 exp", 1, (0, 0, 0))
-                self.win.blit(text, (minion.x, minion.y - 20))
-
             for sk in minion.skills:
                 sk.draw(self.win)
 
@@ -255,7 +247,6 @@ class GamePlay:
                 self.thoiGianHoiSinh = 300
 
         if self.ene.health <= 0:
-
             if self.thoiGianHoiSinhQuai == 300:
                 self.kda[0] = self.kda[0] + 1
 
@@ -265,10 +256,26 @@ class GamePlay:
                 self.ene = enemy.Enemy()
                 self.thoiGianHoiSinhQuai = 300
 
+        # upgrade player
+        if self.deadEneMini > 0 :
+            self.man.exp += 100*self.deadEneMini
+            if self.man.exp >= self.man.maxExp:
+                if self.man.lv < 9:
+                    self.man.lv += 1
+                    self.man.maxExp += self.man.lv*100
+
+
+        # update enemy
+        if self.deadAllyMini > 0:
+            self.ene.exp += 100*self.deadAllyMini
+            if self.ene.exp >= self.ene.maxExp:
+                if self.ene.lv < 9:
+                    self.ene.lv += 1
+                    self.ene.maxExp += self.ene.lv*100
+
 
         # thuc hien cac viec di chuyen
         self.playMove()
-
 
         # nguoi bi danh boi may
         for sk in self.ene.skills:
@@ -378,8 +385,10 @@ class GamePlay:
                 if ktraHitBox(sk, self.blueTower):
                     self.blueTower.hitted(sk, self.blueTurret)
 
-        self.minionsPlayer = list(filter(lambda x: x.tonTai, self.minionsPlayer[:]))  # Loc cac doi tuong linh con song
-        self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
+        self.deadAllyMini = len(list(filter(lambda x: not x.tonTai, self.minionsPlayer[:])))
+        self.minionsPlayer = list(filter(lambda x: x.tonTai, self.minionsPlayer[:])) #Loc cac doi tuong linh con song
+        self.deadEneMini = len(list(filter(lambda x: not x.tonTai, self.minionsEnemy[:])))
+        self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  #Loc cac doi thuong linh con song
         self.ene.skills = list(filter(lambda x: x.tonTai > 0, self.ene.skills[:]))
         self.man.skills = list(filter(lambda x: x.tonTai > 0, self.man.skills[:]))
         self.redTurret.skills = list(filter(lambda x: x.tonTai > 0, self.redTurret.skills[:]))
