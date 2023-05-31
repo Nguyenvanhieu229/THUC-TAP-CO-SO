@@ -224,7 +224,7 @@ class GamePlay:
         kc = calculator.khoangCach(self.ene.x, self.ene.y, self.man.x, self.man.y)
 
         if kc < 100 and self.ene.E == 0:
-            self.ene.attack(self.win, "E", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
+            self.ene.attack(self.win, "E", self.ene.x, self.ene.y, self.man.x - 30, self.man.y - 30)
         elif kc < 200 and self.ene.W == 0:
             self.ene.attack(self.win, "W", self.ene.x, self.ene.y, self.man.x + 10, self.man.y + 10)
         elif kc < 100 and self.ene.Q == 0:

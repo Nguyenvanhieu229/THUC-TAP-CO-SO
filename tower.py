@@ -24,7 +24,7 @@ class Tower:
     def hitted(self, enemySkill, turret):
         if self.health > 0:
         #nha chi bi tan cong boi don danh thuong
-            if enemySkill.vel == 8:
+            if enemySkill.vel == 8 and enemySkill.tonTai > 0:
                 if turret.health <= 0:
                     self.health -= enemySkill.atk
                 enemySkill.tonTai = enemySkill.tonTai - 1

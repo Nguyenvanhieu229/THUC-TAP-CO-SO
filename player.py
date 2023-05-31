@@ -70,7 +70,7 @@ class Player:
         if target.health <= 0:
             return
         self.A = 50
-        self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill2-removebg-preview.png")],self.tancong,self.x,self.y
+        self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/main character/skills/danhThuong.png")],self.tancong,self.x,self.y
                                                     , target, 100, 1))
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
@@ -86,7 +86,7 @@ class Player:
         self.y = end_y + 80
         self.next_x = end_x + 75
         self.next_y = end_y + 80
-        self.E = 100
+        self.E = 240
         self.skills.append(not_move_skill.NotMoveSkill([pygame.image.load(r"picture/main character/skills/skill3a.png")], 100, end_x, end_y, 100, 1, 30))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
@@ -99,7 +99,8 @@ class Player:
             self.ultimate(end_x, end_y)
 
     def hitted(self, enemyskill):
-        if self.health > 0 :
+
+        if self.health > 0 and enemyskill.tonTai > 0:
             self.health -= enemyskill.atk
             enemyskill.tonTai = enemyskill.tonTai - 1
 

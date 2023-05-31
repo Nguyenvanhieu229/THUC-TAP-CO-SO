@@ -99,7 +99,7 @@ class Enemy:
 
 
     def hitted(self, sk):
-        if self.health > 0:
+        if self.health > 0 and sk.tonTai > 0:
             self.health -= sk.atk
             sk.tonTai = sk.tonTai - 1
 
@@ -108,20 +108,20 @@ class Enemy:
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill1.png")], 10, start_x, start_y, end_x, end_y, 200, 1))
 
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
-                                        pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png"),
-                                       pygame.image.load(r"picture/main character/skills/skill2.png"), pygame.image.load(r"picture/main character/skills/skill2.png")], 20, start_x, start_y, end_x,
-                        end_y, 200, 6))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/enemy/skill2.png")], 30, start_x, start_y, end_x,
+                        end_y, 200, 1))
         self.W = 150
 
 
     def ultimate(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/util.png")], 30, end_x, end_y, end_x, end_y, 300, 1))
-        self.E = 200
+        self.E = 240
+        self.skills.append(
+            not_move_skill.NotMoveSkill([pygame.image.load(r"picture/enemy/utilmate.png")], 10, end_x,
+                                        end_y, 100, 1, 30))
 
     def chonMucTieu(self, nhanVat, linhs, turret, tower):
 
@@ -165,7 +165,7 @@ class Enemy:
                 return
             self.A = 45
             self.skills.append(
-                autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 50, self.x, self.y, dich, 200, 1))
+                autoSkill.AutoSkill([pygame.image.load(r"picture/enemy/danhthuong.png")], 20, self.x, self.y, dich, 200, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
 
