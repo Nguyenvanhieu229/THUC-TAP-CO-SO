@@ -29,18 +29,21 @@ class Minion:
         self.next_y = 151 if ben else 623
 
     def draw(self, win):
-
         if self.walkCount == 15:
             self.walkCount = 0
 
         if self.ben:
             win.blit(self.img2[self.walkCount//5], (self.x, self.y))
+            pygame.draw.rect(win, (126, 248, 5),
+                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+            pygame.draw.rect(win, color="blue", rect=(self.hitbox[0], self.hitbox[1] - 22, 50, 10), width=2)
         else:
             win.blit(self.img[self.walkCount // 5], (self.x, self.y))
+            pygame.draw.rect(win, (255, 0, 0),
+                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+            pygame.draw.rect(win, color="blue", rect=(self.hitbox[0], self.hitbox[1] - 22, 50, 10), width=2)
         self.walkCount += 1
-        pygame.draw.rect(win, (255, 0, 0), (self.hitbox[0] - 5, self.hitbox[1] - 22, 50, 10))
-        pygame.draw.rect(win, (0, 128, 0),
-                         (self.hitbox[0] - 5, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+
 
     def move(self, ene, minions,turret):
         minx, miny = calculator.find(self, ene, minions, turret)
@@ -73,7 +76,8 @@ class Minion:
             return tower
 
     def attack(self, nhanVat, minions, turret, tower ):
-
+        if self.health <= 0:
+            return
         # xu ly thoi gian cho
         self.cho = self.cho - 1 if self.cho >= 1 else 0
 
@@ -81,16 +85,17 @@ class Minion:
             return
 
         dich = self.chonMucTieu(nhanVat, minions, turret, tower)
-
         # them moi doi tuong autoSkill vao mang skill cua linh
         if dich:
+            if dich.health <= 0:
+                return
             self.cho = 45
             self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 10, self.x, self.y, dich, 200, 1))
 
     def hitted(self, enemyskill):
-
-        self.health -= enemyskill.atk
-        enemyskill.tonTai = enemyskill.tonTai - 1
+        if self.health > 0 :
+            self.health -= enemyskill.atk
+            enemyskill.tonTai = enemyskill.tonTai - 1
 
         if self.health <= 0:
             self.tonTai = 0

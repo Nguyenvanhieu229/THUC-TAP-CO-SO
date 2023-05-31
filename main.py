@@ -55,6 +55,14 @@ class GamePlay:
         self.time = [0, 0, 0]
         self.tickcount = 0
         self.font1 = pygame.font.SysFont("comicsans", 50, True)
+        self.skillInfo = pygame.image.load(r"picture/ava.png")
+        self.avatar = pygame.image.load(r"picture/avatar.png")
+        self.v1 = pygame.image.load(r"picture/v1.png")
+        self.v2 = pygame.image.load(r"picture/v2.png")
+        self.vs = pygame.image.load(r"picture/vs.png")
+        self.lvup = pygame.font.SysFont("comicsans",15,True)
+        self.timeExist = 60
+
 
     def settings(self):
         self.run = True
@@ -64,6 +72,7 @@ class GamePlay:
             if event.type == pygame.QUIT:
                 self.run = False
             if event.type == pygame.MOUSEBUTTONDOWN and event.button == 3:
+                print(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
                 self.change = True
         if self.redTower.tonTai == False:
             for event in events:
@@ -92,7 +101,7 @@ class GamePlay:
         self.win.blit(text, (0, 0))
 
         #ve kda
-        text = self.font2.render("K: " + str(self.kda[0]) + " D: " + str(self.kda[1]) + " E: " + str(self.kda[2]), 1, (0, 0, 0))
+        text = self.font2.render("K: " + str(self.kda[0]) + "   D: " + str(self.kda[1]) + "   EXP: " + str(self.kda[2]), 1, (0, 0, 0))
         pygame.draw.rect(self.win, (0, 255, 255), (600, 0, 200, 30))
         self.win.blit(text, (600,0))
         # vẽ đạn từ trụ
@@ -118,11 +127,19 @@ class GamePlay:
         # ve linh hai ben
         for minion in self.minionsPlayer:
             minion.draw(self.win)
+            if minion.health <= 0 :
+                text = self.lvup.render("+20 exp", 1, (0, 0, 0))
+                self.win.blit(text, (minion.x, minion.y - 20))
+
             for sk in minion.skills:
                 sk.draw(self.win)
 
         for minion in self.minionsEnemy:
             minion.draw(self.win)
+            if minion.health <= 0:
+                text = self.lvup.render("+20 exp", 1, (0, 0, 0))
+                self.win.blit(text, (minion.x, minion.y - 20))
+
             for sk in minion.skills:
                 sk.draw(self.win)
 
@@ -145,6 +162,10 @@ class GamePlay:
             self.win.blit(text1, (500, 300))
             text2 = self.font2.render("REMATCH", 1, (0, 0, 0))
             self.win.blit(text2, (550, 400))
+        self.drawSkillInfor()
+        self.win.blit(self.v1, (1100, 550))
+        self.win.blit(self.v2,(1100,670))
+        self.drawHoiSinh()
         pygame.display.update()
 
     def turretAttack(self):
@@ -212,7 +233,8 @@ class GamePlay:
             self.ene.danhThuong(self.man, self.minionsPlayer, self.blueTurret, self.blueTower)
 
     def playEvent(self):
-        if self.checkMouse(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]):
+        if self.checkMouse(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]) \
+                and self.checkMouse(pygame.mouse.get_pos()[0], pygame.mouse.get_pos()[1]).health > 0:
             pygame.mouse.set_cursor(*pygame.cursors.broken_x)
         else:
             pygame.mouse.set_cursor(*pygame.cursors.arrow)
@@ -349,12 +371,12 @@ class GamePlay:
         for blue in self.minionsPlayer:
             for sk in blue.skills:
                 if ktraHitBox(sk, self.redTower):
-                    self.redTower.hitted(sk)
+                    self.redTower.hitted(sk, self.redTurret)
 
         for red in self.minionsEnemy:
             for sk in red.skills:
                 if ktraHitBox(sk, self.blueTower):
-                    self.blueTower.hitted(sk)
+                    self.blueTower.hitted(sk, self.blueTurret)
 
         self.minionsPlayer = list(filter(lambda x: x.tonTai, self.minionsPlayer[:]))  # Loc cac doi tuong linh con song
         self.minionsEnemy = list(filter(lambda x: x.tonTai, self.minionsEnemy[:]))  # Loc cac doi thuong linh con song
@@ -414,11 +436,45 @@ class GamePlay:
         if self.redTurret.x < x1 and x1 < self.redTurret.x + 50 and self.redTurret.y < y1 and y1 < self.redTurret.y + 100:
                 return self.redTurret
 
-        if self.redTower.x < x1 and x1 < self.redTower.x + 50 and self.redTower.y < y1 and y1 < self.redTower.y + 100 and self.redTurret.health <= 0:
+        if self.redTower.x < x1 + 50 and x1 < self.redTower.x + 100 and self.redTower.y < y1 + 50 and y1 < self.redTower.y + 100 and self.redTurret.health <= 0:
                 return self.redTower
 
         if self.ene.x < x1 and x1 < self.ene.x + 50 and self.ene.y < y1 and y1 < self.ene.y + 50:
                 return  self.ene
+
+
+    def drawSkillInfor(self):
+        self.win.blit(self.skillInfo, (580, 700))
+        self.win.blit(self.avatar, (568, 700))
+        q = self.man.Q/30
+        if q != 0:
+            text1 = self.font1.render(str(int(q)), 1, (240, 248, 255))
+            self.win.blit(text1, (674, 703))
+        w = self.man.W/ 30
+        if w != 0:
+            text1 = self.font1.render(str(int(w)), 1, (240, 248, 255))
+            self.win.blit(text1, (750, 703))
+        e = self.man.E / 30
+        if e != 0:
+            text1 = self.font1.render(str(int(e)), 1, (240, 248, 255))
+            self.win.blit(text1, (826, 703))
+
+    def drawHoiSinh(self):
+        if self.man.health <= 0:
+            p1 = self.thoiGianHoiSinh/30
+            if p1!=0:
+                text1 = self.font1.render(str(int(p1)), 1, (240, 248, 255))
+                self.win.blit(text1, (1300, 570))
+        if self.ene.health <= 0:
+            p2 = self.thoiGianHoiSinhQuai/30
+            if p2!=0:
+                text1 = self.font1.render(str(int(p2)), 1, (240, 248, 255))
+                self.win.blit(text1, (1150, 680))
+        pygame.draw.line(self.win,(240, 248, 255),(1101,671),(1366,671))
+        self.win.blit(self.vs, (1185, 630))
+
+
+
 
 
 

@@ -15,20 +15,21 @@ class Tower:
 
     def draw(self, win):
         if self.tonTai:
+            color = (255, 0, 0) if self.x == 1190 and self.y == 0 else (126, 248, 5)
             win.blit(self.img, (self.x, self.y))
-            pygame.draw.rect(win, (255, 0, 0),
-                             (self.hitbox[0] + 65, self.hitbox[1], 50 - (0.05 * (1000 - self.health)), 10))
-            pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 65, self.hitbox[1], 50, 10), width=2)
+            pygame.draw.rect(win, color,
+                             (self.hitbox[0] + 55, self.hitbox[1] + 10, 50 - (0.05 * (1000 - self.health)), 10))
+            pygame.draw.rect(win, color="blue", rect=(self.hitbox[0] + 55, self.hitbox[1] + 10, 50, 10), width=2)
 
     def hitted(self, enemySkill, turret):
-
+        if self.health > 0:
         #nha chi bi tan cong boi don danh thuong
-        if enemySkill.vel == 8:
-            if turret.health <= 0:
-                self.health -= enemySkill.atk
-            enemySkill.tonTai = enemySkill.tonTai - 1
+            if enemySkill.vel == 8:
+                if turret.health <= 0:
+                    self.health -= enemySkill.atk
+                enemySkill.tonTai = enemySkill.tonTai - 1
 
-            #am thanh
+                #am thanh
         if self.health <= 0:
                 self.tonTai = False
                 #game ket thuc

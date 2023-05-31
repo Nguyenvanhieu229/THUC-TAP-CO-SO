@@ -53,6 +53,9 @@ class Enemy:
         self.y = 100
         self.hitbox = (self.x, self.y, 50, 50)
         self.tonTai = True
+        self.dead = pygame.image.load(r"picture/deadPic.png")
+        self.lv = 1
+        self.exp = 100 + self.lv*150
 
     def move(self, man, reset, minionPlayer, blueTurret, blueTower):
 
@@ -74,7 +77,7 @@ class Enemy:
     def draw(self, win):
 
         if self.health <= 0:
-            win.blit(self.hinhanhTrai[1],(self.x, self.y))
+            win.blit(self.dead,(self.x, self.y))
             return
 
         if self.walkCount + 1 >= 33:
@@ -85,16 +88,20 @@ class Enemy:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x, self.y))
             self.walkCount += 1
-        pygame.draw.rect(win, (254, 0, 0), (self.hitbox[0] + 10, self.hitbox[1] - 10, 50, 10))
-        pygame.draw.rect(win, (0, 128, 0),
-                         (self.hitbox[0] + 10, self.hitbox[1] - 10, 50 - (0.1 * (500 - self.health)), 10))
+        pygame.draw.rect(win, (255, 0, 0),
+                         (self.hitbox[0]+15, self.hitbox[1] - 5 , 50 - (0.1 * (500 - self.health)), 10))
+        pygame.draw.rect(win, color="blue", rect=(self.hitbox[0]+15, self.hitbox[1] - 5, 50, 10), width=2)
+        font3 = pygame.font.SysFont("comicsans", 20, True)
+        text = font3.render(str(self.lv), 1, (0, 0, 0))
+        pygame.draw.circle(win, color="red", center=(self.hitbox[0]+2, self.hitbox[1]), radius=12, width=0)
+        win.blit(text, (self.x - 27 + 23, self.y - 34 + 20))
 
 
 
     def hitted(self, sk):
-
-        self.health -= sk.atk
-        sk.tonTai = sk.tonTai - 1
+        if self.health > 0:
+            self.health -= sk.atk
+            sk.tonTai = sk.tonTai - 1
 
         if self.health <= 0:
             self.tonTai = False
@@ -152,9 +159,10 @@ class Enemy:
     def danhThuong(self, nhanVat, minions, turret, tower):
 
         dich = self.chonMucTieu(nhanVat, minions, turret, tower)
-
         # them moi doi tuong autoSkill vao mang skill cua linh
         if dich:
+            if dich.health <= 0:
+                return
             self.A = 45
             self.skills.append(
                 autoSkill.AutoSkill([pygame.image.load(r"picture/bullet.png")], 50, self.x, self.y, dich, 200, 1))

@@ -33,6 +33,9 @@ class Player:
         self.y = 700
         self.hitbox = (self.x, self.y, 20, 20)
         self.tonTai = True
+        self.dead = pygame.image.load(r"picture/deadPic.png")
+        self.lv = 1
+        self.exp = 100 + self.lv*150
 
     def move(self, next_x, next_y, change):
         if change:
@@ -47,7 +50,7 @@ class Player:
 
     def draw(self,win):
         if self.health <= 0:
-            win.blit(self.hinhanhTrai[1],(self.x, self.y))
+            win.blit(self.dead,(self.x, self.y))
             return
 
         self.walkCount = self.walkCount + 1 if self.walkCount < 26 else 0
@@ -55,11 +58,17 @@ class Player:
             win.blit(self.hinhanhTrai[self.walkCount // 3], (self.x-25, self.y-25))
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
-        pygame.draw.rect(win, (255, 0,  0),(self.hitbox[0] - 14, self.hitbox[1] - 22, 50, 10))
-        pygame.draw.rect(win, (0, 128, 0),
-                         (self.hitbox[0] - 14, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+        pygame.draw.rect(win, (126, 248, 5),
+                         (self.hitbox[0] -10, self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+        pygame.draw.rect(win, color="blue", rect=(self.hitbox[0]-10, self.hitbox[1] - 22, 50, 10), width=2)
+        font3 = pygame.font.SysFont("comicsans", 20, True)
+        text = font3.render(str(self.lv), 1, (0, 0, 0))
+        pygame.draw.circle(win, color="green", center=(self.hitbox[0] - 22, self.hitbox[1] - 19), radius=12,width = 0)
+        win.blit(text, (self.x-27, self.y-34))
 
     def danhThuong(self,target):
+        if target.health <= 0:
+            return
         self.A = 50
         self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/skill2-removebg-preview.png")],self.tancong,self.x,self.y
                                                     , target, 100, 1))
@@ -90,11 +99,13 @@ class Player:
             self.ultimate(end_x, end_y)
 
     def hitted(self, enemyskill):
-        self.health -= enemyskill.atk
-        enemyskill.tonTai = enemyskill.tonTai - 1
+        if self.health > 0 :
+            self.health -= enemyskill.atk
+            enemyskill.tonTai = enemyskill.tonTai - 1
 
         if self.health <= 0:
             self.tonTai = False
+
 
 
 
