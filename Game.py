@@ -6,7 +6,7 @@ top.geometry("1366x768")
 
 
 def my_command():
-    #top.destroy()
+    top.destroy()
     game = main.GamePlay()
     game.play()
 

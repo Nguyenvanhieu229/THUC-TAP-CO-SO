@@ -27,8 +27,11 @@ class Minion:
         self.cho = 0
         self.next_x = 1239 if ben else 153
         self.next_y = 151 if ben else 623
+        self.timeExist = 60 if not self.tonTai else 0
+        self.lvup = pygame.font.SysFont("comicsans", 15, True)
 
     def draw(self, win):
+
         if self.walkCount == 15:
             self.walkCount = 0
 
