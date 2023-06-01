@@ -11,6 +11,9 @@ class AutoSkill(skill.Skill):
 
     def draw(self, win):
 
+        if self.start_x == self.end_x and self.start_y == self.end_y:
+            self.tonTai = 0
+
         # neu muc tieu da chet hoac chieu da het han ton tai thi khong ve nua
         if self.mucTieu.health == 0 or self.tonTai == 0:
             self.tonTai = 0

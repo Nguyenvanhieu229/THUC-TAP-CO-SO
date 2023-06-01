@@ -159,6 +159,33 @@ class GamePlay:
         self.win.blit(self.v1, (1100, 550))
         self.win.blit(self.v2,(1100,670))
         self.drawHoiSinh()
+        #
+        # pygame.draw.rect(self.win,"blue", self.blueTower.hitbox, width=2)
+        # pygame.draw.rect(self.win, "blue", self.blueTurret.hitbox, width=2)
+        # pygame.draw.rect(self.win, "blue", self.redTurret.hitbox, width=2)
+        # pygame.draw.rect(self.win, "blue", self.redTower.hitbox, width=2)
+        #
+        # for mn in self.minionsPlayer:
+        #     pygame.draw.rect(self.win, "blue", mn.hitbox, width=2)
+        #     for sk in mn.skills:
+        #         pygame.draw.rect(self.win, "blue", sk.hitbox, width=2)
+        #
+        # for mn in self.minionsEnemy:
+        #     pygame.draw.rect(self.win, "blue", mn.hitbox, width=2)
+        #     for sk in mn.skills:
+        #         pygame.draw.rect(self.win, "blue", sk.hitbox, width=2)
+        #
+        # pygame.draw.rect(self.win, "blue", self.man.hitbox, width=2)
+        # pygame.draw.rect(self.win, "blue", self.ene.hitbox, width=2)
+        #
+        # for sk in self.man.skills:
+        #     pygame.draw.rect(self.win, "blue", sk.hitbox, width=2)
+        #
+        # for sk in self.ene.skills:
+        #     pygame.draw.rect(self.win, "blue", sk.hitbox, width=2)
+
+
+
         pygame.display.update()
 
     def turretAttack(self):
@@ -232,7 +259,7 @@ class GamePlay:
         else:
             pygame.mouse.set_cursor(*pygame.cursors.arrow)
         # sinh linh
-        if (self.time[0] * 60 + self.time[1]) % 20 == 0 and self.time[2] == 0:
+        if (self.time[0] * 60 + self.time[1]) % 10 == 0 and self.time[2] == 0:
             self.minionsEnemy.append(mn.Minion(False, 1239, 153))
             self.minionsPlayer.append((mn.Minion(True, 152, 623)))
 
@@ -449,16 +476,16 @@ class GamePlay:
 
     def checkMouse(self,x1,y1):
         for minion in self.minionsEnemy:
-            if minion.x < x1 and x1 < minion.x + 50 and minion.y < y1 and y1 < minion.y+ 50:
+            if minion.hitbox[0] < x1 and x1 < minion.hitbox[0] + minion.hitbox[2] and minion.hitbox[1] < y1 and y1 < minion.hitbox[1]+ minion.hitbox[3]:
                 return minion
 
-        if self.redTurret.x < x1 and x1 < self.redTurret.x + 50 and self.redTurret.y < y1 and y1 < self.redTurret.y + 100:
+        if self.redTurret.hitbox[0] < x1 and x1 < self.redTurret.hitbox[0] + self.redTurret.hitbox[2] and self.redTurret.hitbox[1]< y1 and y1 < self.redTurret.hitbox[1] + self.redTurret.hitbox[3]:
                 return self.redTurret
 
-        if self.redTower.x < x1 + 50 and x1 < self.redTower.x + 100 and self.redTower.y < y1 + 50 and y1 < self.redTower.y + 100 and self.redTurret.health <= 0:
+        if self.redTower.hitbox[0] < x1 and x1 < self.redTower.hitbox[0] + self.redTower.hitbox[2] and self.redTower.hitbox[1]< y1 and y1 < self.redTower.hitbox[1] + self.redTower.hitbox[3]:
                 return self.redTower
 
-        if self.ene.x < x1 and x1 < self.ene.x + 50 and self.ene.y < y1 and y1 < self.ene.y + 50:
+        if self.ene.x < x1 and x1 < self.ene.x + 60 and self.ene.y < y1 and y1 < self.ene.y + 60:
                 return  self.ene
 
 

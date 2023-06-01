@@ -15,7 +15,7 @@ class Turret:
         self.x = x
         self.y = y
         self.cho = 0
-        self.hitbox = (self.x, self.y, 150, 150)
+        self.hitbox = (self.x, self.y, 75, 150)
         self.tonTai = True
         self.range = 100
         self.status = False  # true neu tru sap tan cong nguoi choi, flase neu khong

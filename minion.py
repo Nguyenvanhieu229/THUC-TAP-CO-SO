@@ -17,11 +17,11 @@ class Minion:
         self.range = 50
         self.walkCount = 0
         self.skills = []
-        self.health = 500
+        self.health = 300
         self.x = x
         self.y = y
         self.tonTai = 1
-        self.hitbox = (self.x, self.y, 30, 30)
+        self.hitbox = (self.x, self.y, 50, 50)
         self.ben = ben
         self.vel = 2
         self.cho = 0
@@ -38,12 +38,12 @@ class Minion:
         if self.ben:
             win.blit(self.img2[self.walkCount//5], (self.x, self.y))
             pygame.draw.rect(win, (126, 248, 5),
-                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (50/300 * (300 - self.health)), 10))
             pygame.draw.rect(win, color="blue", rect=(self.hitbox[0], self.hitbox[1] - 22, 50, 10), width=2)
         else:
             win.blit(self.img[self.walkCount // 5], (self.x, self.y))
             pygame.draw.rect(win, (255, 0, 0),
-                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (0.1 * (500 - self.health)), 10))
+                             (self.hitbox[0], self.hitbox[1] - 22, 50 - (50/300 * (300 - self.health)), 10))
             pygame.draw.rect(win, color="blue", rect=(self.hitbox[0], self.hitbox[1] - 22, 50, 10), width=2)
         self.walkCount += 1
 
@@ -57,7 +57,7 @@ class Minion:
             self.x = ((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.x
             self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
 
-        self.hitbox = (self.x, self.y, 20, 20)
+        self.hitbox = (self.x, self.y, 50, 50)
 
     def chonMucTieu(self, nhanVat, linhs, turret, tower):
 
@@ -66,13 +66,13 @@ class Minion:
             if kc < self.range:
                 return linh
 
-        kc = calculator.khoangCach(self.x, self.y, nhanVat.x, nhanVat.y)
-        if kc < self.range:
-            return nhanVat
-
         kc = calculator.khoangCach(self.x, self.y, turret.x, turret.y)
         if kc < self.range and turret.health > 0:
             return turret
+
+        kc = calculator.khoangCach(self.x, self.y, nhanVat.x, nhanVat.y)
+        if kc < self.range:
+            return nhanVat
 
         kc = calculator.khoangCach(self.x, self.y, tower.x, tower.y)
         if kc < self.range and tower.health > 0:

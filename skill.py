@@ -11,7 +11,7 @@ class Skill:
         self.walkCount = 0
         self.vel = 6
         self.tonTai = 1
-        self.hitbox = (start_x - 2,start_y - 2, 10, 10)
+        self.hitbox = (start_x,start_y, img[0].get_size()[0], img[0].get_size()[1])
         self.soAnh = soAnh
         kc = calculator.khoangCach(start_x, start_y, end_x, end_y)
         self.end_x = int((end_x - self.start_x) * self.range / kc) + self.start_x if end_x != start_x else end_x
@@ -33,4 +33,4 @@ class Skill:
             win.blit(self.img[self.walkCount], (self.start_x, self.start_y))
         self.start_x = ((self.end_x - self.start_x) * self.vel / kc) + self.start_x if (self.vel < kc and kc != 0) else self.end_x
         self.start_y = ((self.end_y - self.start_y) * self.vel / kc) + self.start_y if (self.vel < kc and kc != 0) else self.end_y
-        self.hitbox = (self.start_x - 2, self.start_y - 2, 20, 20)
+        self.hitbox = (self.start_x, self.start_y, self.img[0].get_size()[0], self.img[0].get_size()[1])

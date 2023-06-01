@@ -51,7 +51,7 @@ class Enemy:
         self.A = 0
         self.x = 1300
         self.y = 100
-        self.hitbox = (self.x, self.y, 50, 50)
+        self.hitbox = (self.x, self.y, 60, 60)
         self.tonTai = True
         self.dead = pygame.image.load(r"picture/deadPic.png")
         self.lv = 1
@@ -62,7 +62,9 @@ class Enemy:
 
         dich = self.chonMucTieuDi(man, minionPlayer, blueTurret, blueTower)
 
-        kcDich = calculator.khoangCach(self.x, self.y, dich.x, dich.y)
+        kcDich = 0
+        if dich:
+            kcDich = calculator.khoangCach(self.x, self.y, dich.x, dich.y)
 
         if reset % 2 == 0 and dich:
             self.next_x =  random.randint(int(dich.x - 30), int(dich.x + 30))
@@ -73,7 +75,7 @@ class Enemy:
             self.x = ((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.x
             self.y = ((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.y
 
-        self.hitbox = (self.x, self.y, 20, 20)
+        self.hitbox = (self.x, self.y, 60, 60)
 
     def draw(self, win):
 
@@ -166,7 +168,7 @@ class Enemy:
                 return
             self.A = 45
             self.skills.append(
-                autoSkill.AutoSkill([pygame.image.load(r"picture/enemy/danhthuong .png")], self.tancong, self.x, self.y, dich, 200, 1))
+                autoSkill.AutoSkill([pygame.image.load(r"picture/enemy/danhthuong .png")], self.tancong + 10 * self.lv, self.x, self.y, dich, 200, 1))
 
     def attack(self, win, skill, start_x, start_y, end_x, end_y):
 

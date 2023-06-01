@@ -13,12 +13,12 @@ class Player:
         self.next_x = 100
         self.next_y = 700
         self.health = 1000
-        self.tancong = 500
+        self.tancong = 100
         self.walkCount = 0
 
         self.health = 1000
         self.thu = 20
-        self.range = 200
+        self.range = 100
         self.skills = []
         self.nangluong = 100
         self.hinhanhTrai = [pygame.image.load(r'picture\main character\R1.png'), pygame.image.load(r'picture\main character\R2.png'), pygame.image.load(r'picture\main character\R3.png'), pygame.image.load(r'picture\main character\R4.png'), pygame.image.load(r'picture\main character\R5.png'), pygame.image.load(r'picture\main character\R6.png'),pygame.image.load(r'picture\main character\R7.png'), pygame.image.load(r'picture\main character\R8.png'), pygame.image.load(r'picture\main character\R9.png')]
@@ -31,7 +31,7 @@ class Player:
         self.A = 0
         self.x = 100
         self.y = 700
-        self.hitbox = (self.x, self.y, 20, 20)
+        self.hitbox = (self.x, self.y, 60, 60)
         self.tonTai = True
         self.dead = pygame.image.load(r"picture/deadPic.png")
         self.lv = 1
@@ -45,7 +45,7 @@ class Player:
         kc = calculator.khoangCach(self.x, self.y, self.next_x, self.next_y)
         self.x = int((self.next_x - self.x) * self.vel / kc) + self.x if self.vel < kc else self.next_x
         self.y = int((self.next_y - self.y) * self.vel / kc) + self.y if self.vel < kc else self.next_y
-        self.hitbox = (self.x, self.y, 200, 200)
+        self.hitbox = (self.x-20, self.y-20, 60, 60)
 
 
 
@@ -60,26 +60,26 @@ class Player:
         else:
             win.blit(self.hinhanhPhai[self.walkCount // 3], (self.x-25, self.y-25))
         pygame.draw.rect(win, (126, 248, 5),
-                         (self.hitbox[0] - 10, self.hitbox[1] - 22, 50 - (0.05 * (1000 - self.health)), 10))
-        pygame.draw.rect(win, color="blue", rect=(self.hitbox[0]-10, self.hitbox[1] - 22, 50, 10), width=2)
+                         (self.hitbox[0], self.hitbox[1] - 20, 50 - (0.05 * (1000 - self.health)), 10))
+        pygame.draw.rect(win, color="blue", rect=(self.hitbox[0], self.hitbox[1] - 20, 50, 10), width=2)
         font3 = pygame.font.SysFont("comicsans", 20, True)
         text = font3.render(str(self.lv), 1, (0, 0, 0))
-        pygame.draw.circle(win, color="green", center=(self.hitbox[0] - 22, self.hitbox[1] - 19), radius=12,width = 0)
-        win.blit(text, (self.x-27, self.y-34))
+        pygame.draw.circle(win, color="green", center=(self.hitbox[0] - 12, self.hitbox[1] - 17), radius=12,width = 0)
+        win.blit(text, (self.hitbox[0]-18, self.y-52))
 
     def danhThuong(self,target):
         if target.health <= 0:
             return
         self.A = 50
-        self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/main character/skills/danhThuong.png")],self.tancong,self.x,self.y
+        self.skills.append(autoSkill.AutoSkill([pygame.image.load(r"picture/main character/skills/danhThuong.png")],self.tancong + 10 * self.lv,self.x,self.y
                                                     , target, 100, 1))
 
     def skill1(self, win, start_x, start_y, end_x, end_y):
         self.Q = 100
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1a.png")], 100, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill1a.png")], 100 + 10 * self.lv, start_x, start_y, end_x, end_y, 200, 1))
 
     def skill2(self, win, start_x, start_y, end_x, end_y):
-        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2a.png")], 120, start_x, start_y, end_x, end_y, 200, 1))
+        self.skills.append(skill.Skill([pygame.image.load(r"picture/main character/skills/skill2a.png")], 120 + 10 * self.lv, start_x, start_y, end_x, end_y, 200, 1))
         self.W = 150
 
     def ultimate(self, end_x, end_y):

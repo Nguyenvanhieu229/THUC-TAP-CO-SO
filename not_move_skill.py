@@ -16,3 +16,4 @@ class NotMoveSkill(skill.Skill):
         self.tonTai -= 1
 
 
+
